@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class Player : Character, IPlayer
+public class Player : Character, IPlayer, ITargetPlayer
 {
     private CharacterController _characterController;
     public CharacterController CharacterController => _characterController;
+    public Vector3 Position => transform.position;
 
     protected override void Awake()
     {

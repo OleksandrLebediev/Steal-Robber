@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Bag : MonoBehaviour
 {
     private List<IItemForCollect> _items = new List<IItemForCollect>();
-    private Vector3 _firstÑell = new Vector3(0, -0.41f, 0.15f);
+    private Vector3 _firstÑell = new Vector3(0, -0.37f, 0.15f);
     private float _stepBlockY = 0.16f;
 
     public int AmountItems => _items.Count;

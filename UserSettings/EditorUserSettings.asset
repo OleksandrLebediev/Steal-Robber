@@ -6,24 +6,33 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedScenePath-0:
-      value: 2242470311464673343e29123f0f66505b573a2b383c2a352a3b1226ece4740bf6e638ede6282b731d07e2334b0d023afc0f1a44d70706241304f80d05ec5e061fcc0cdc
-      flags: 0
-    RecentlyUsedScenePath-1:
       value: 2242470311464673343e29123f0f66505b573a2b383c2a352a3b1226ece4740bf6e638ede6282b731d07e2334b0d023afc0f1a44d20e07045f1bf30705e6
       flags: 0
-    RecentlyUsedScenePath-2:
+    RecentlyUsedScenePath-1:
       value: 22424703114646680e0b0227036c6c111b07142f1f2b233e2867083debf42d
       flags: 0
-    RecentlyUsedScenePath-3:
+    RecentlyUsedScenePath-2:
       value: 224247031146466d0201082d1f6c691f191317250f3d352422243e3be3f2353bf6e224a6c33f32337631ec390a3b1270d60f0404c93d05041501f22d04ec041c1ce610c408c91c08ce0b52dbc314c5fa
       flags: 0
-    RecentlyUsedScenePath-4:
+    RecentlyUsedScenePath-3:
       value: 224247031146466819011e2720225c1b17101d3963001f000819321fdba07978c0e622fdeb3f382e3617e138440d153efc0e0819e2442e0e1c01b23d12fa1e16028a39c916e71d16ce1a08dd8308dfeac1cf
       flags: 0
-    RecentlyUsedScenePath-5:
+    RecentlyUsedScenePath-4:
       value: 224247031146466819011e2720225c1b17101d3963001f000819321fdba07978c0e622fdeb3f382e3617e138440d153efc0e0819e2442e0e1c01b23d12fa1e16028a3cc017c75109c51008d7
       flags: 0
+    RecentlyUsedScenePath-5:
+      value: 224247031146467702192f2a11315e1302120a1a2d2b2d7f01260a10eae12639e1f333fbd83e3a31364dff2e0138003de1451a0afb1b060e2e1dfe0b1ffa5f3714c817fa29cb1a12ce5709c0c409c8
+      flags: 0
     RecentlyUsedScenePath-6:
+      value: 22424703114646680e0b0227036c711501572b292926237e38271427fb
+      flags: 0
+    RecentlyUsedScenePath-7:
+      value: 22424703114646790c1a182e15115009171b1d0e392716111d0b2f7cd1e33136e7a81be8ee340c3f3c0cea721130082beb
+      flags: 0
+    RecentlyUsedScenePath-8:
+      value: 2242470311464672030a05273d224d135932162f213110393e20123dadd3373dece225a6d42e3a3d3516e76f20701431fb1e10
+      flags: 0
+    RecentlyUsedScenePath-9:
       value: 22424703114646680e0b0227036c78111b12563f22213229
       flags: 0
     vcSharedLogLevel:

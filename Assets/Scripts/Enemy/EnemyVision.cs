@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyVision : MonoBehaviour
 {
@@ -11,8 +12,8 @@ public class EnemyVision : MonoBehaviour
     [SerializeField] private LayerMask _targetMask;
     [SerializeField] private LayerMask _obstacleMask;
 
-    private List<Transform> _visibleTargets = new List<Transform>();
-    private int _delayUpdateFindTargets = 200;
+    private Transform _visibleTargets;
+    private float _delayUpdateFindTargets = 0.2f;
 
     [SerializeField] private float _meshRay;
     [SerializeField] private int edgeResolveIterations;
@@ -22,6 +23,18 @@ public class EnemyVision : MonoBehaviour
 
     [SerializeField] private MeshFilter _visionMeshFilter;
     private Mesh _visionMesh;
+    private Transform _targetPlayer;
+    private bool _playerIsDetected;
+
+
+    public event UnityAction<Transform> PlayerDetected;
+    public event UnityAction PlayerLost;
+
+    public void Hide()
+    {
+        _visionMeshFilter.gameObject.SetActive(false);
+        enabled = false;
+    }
 
     private void Start()
     {
@@ -29,36 +42,62 @@ public class EnemyVision : MonoBehaviour
         _visionMesh.name = "Vision Mesh";
         _visionMeshFilter.mesh = _visionMesh;
 
-        FindVisibleTargets();
+        StartCoroutine(FindTargetsWithDelay());
     }
-
 
     private void LateUpdate()
     {
         DrawVision();
     }
 
-    private async void FindVisibleTargets()
+    private IEnumerator FindTargetsWithDelay()
     {
         while (true)
         {
-            Collider[] currentVisibleTargets = Physics.OverlapSphere(transform.position, _radius, _targetMask);
-            _visibleTargets.Clear();
+            yield return new WaitForSeconds(_delayUpdateFindTargets);
+            FindVisibleTargets();
+        }
+    }
 
-            for (int i = 0; i < currentVisibleTargets.Length; i++)
+    private void FindVisibleTargets()
+    {
+
+        Collider[] currentVisibleTargets = Physics.OverlapSphere(transform.position, _radius, _targetMask);
+        _targetPlayer = null;
+
+        for (int i = 0; i < currentVisibleTargets.Length; i++)
+        {
+            Transform target = currentVisibleTargets[i].transform;
+            Vector3 direction = (target.position - transform.position).normalized;
+            if (Vector3.Angle(transform.forward, direction) < _angle / 2)
             {
-                Transform target = currentVisibleTargets[i].transform;
-                Vector3 direction = (target.position - transform.position).normalized;
-                if (Vector3.Angle(transform.forward, direction) < _angle / 2)
+                float dstToTarget = Vector3.Distance(transform.position, target.position);
+                if (!Physics.Raycast(transform.position, direction, dstToTarget, _obstacleMask))
                 {
-                    float distance = Vector3.Distance(transform.position, target.position);
-                    if (!Physics.Raycast(transform.position, direction, distance, _obstacleMask))
+                    if (currentVisibleTargets[i].TryGetComponent<Player>(out Player player))
                     {
-                        _visibleTargets.Add(target);
+                        _targetPlayer = player.transform;
                     }
+                    
                 }
+
+                //if (currentVisibleTargets[i].TryGetComponent<Player>(out Player player))
+                //{
+                   
+                //}
             }
-            await Task.Delay(_delayUpdateFindTargets);
+        }
+
+        if (_targetPlayer != null && _playerIsDetected == false)
+        {
+            PlayerDetected?.Invoke(_targetPlayer);
+            _playerIsDetected = true;
+        }
+
+        if (_targetPlayer == null && _playerIsDetected == true)
+        {
+            PlayerLost?.Invoke();
+            _playerIsDetected = false;
         }
     }
 
@@ -94,7 +133,7 @@ public class EnemyVision : MonoBehaviour
                 }
 
             }
-            
+
             visionPoints.Add(newVisionCast._point);
             oldVisionCast = newVisionCast;
         }
@@ -123,7 +162,6 @@ public class EnemyVision : MonoBehaviour
         _visionMesh.RecalculateNormals();
 
     }
-
 
     EdgeInfo FindEdge(VisionCastInfo minViewCast, VisionCastInfo maxViewCast)
     {
