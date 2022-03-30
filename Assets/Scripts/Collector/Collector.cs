@@ -15,13 +15,13 @@ public class Collector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent<IItemForCollect>(out IItemForCollect itemForCollect) == true)
+        if(other.TryGetComponent<IObjectForCollect>(out IObjectForCollect itemForCollect) == true)
         {
             TryCollect(itemForCollect);
         }
     }
 
-    private void TryCollect(IItemForCollect itemForCollect)
+    private void TryCollect(IObjectForCollect itemForCollect)
     {
         if (itemForCollect.isCollected == true) return;
 
@@ -29,14 +29,14 @@ public class Collector : MonoBehaviour
 
     }
 
-    private async void CollectItemAnimation(IItemForCollect itemForCollect)
+    private async void CollectItemAnimation(IObjectForCollect itemForCollect)
     {
         float currentTime = 0;
         Vector4 target = _bag.GetPositionFreeCall();
 
         itemForCollect.CurrentTransform.SetParent(transform);
         itemForCollect.SetStateCollected(); 
-        _bag.AddItem(itemForCollect);
+        _bag.AddObject(itemForCollect);
 
         AnimationCurve roadX = AnimationCurve.EaseInOut(0, itemForCollect.CurrentTransform.localPosition.x, _timeCollection, target.x + AnimationOfssetXPosition); 
         AnimationCurve roadY = AnimationCurve.EaseInOut(0, itemForCollect.CurrentTransform.localPosition.y, _timeCollection, target.y); 

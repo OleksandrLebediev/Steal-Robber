@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475fb58e472ff8548996fcefe5c09f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _angle: 90
+  _angle: 45
   _radius: 2
   _targetMask:
     serializedVersion: 2
@@ -551,7 +551,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: a9ef942b30c29314585bec2e0bbf65fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

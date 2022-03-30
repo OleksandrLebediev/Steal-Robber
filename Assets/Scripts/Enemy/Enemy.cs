@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(EnemyVision))]
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : MonoBehaviour, IItemForCollect
+public class Enemy : MonoBehaviour, IObjectForCollect
 {
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotateSpeed;
@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour, IItemForCollect
     public Transform CurrentTarget { get; private set; }
     public Transform[] PathTargetList => _pathTargetList;
     public EnemyVision EnemyVision => _enemyVision;
+    public ObjectForCollect Type => ObjectForCollect.Enemy;
 
 
     public Transform CurrentTransform => transform;
@@ -27,6 +28,7 @@ public class Enemy : MonoBehaviour, IItemForCollect
     public float MoveSpeed => _moveSpeed;
     public float RotateSpeed => _rotateSpeed;
     public Vector3 StatrPosition => _startPosition;
+
 
     private Vector3 _startPosition;
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPS : MonoBehaviour, IItemForCollect
+public class NPS : MonoBehaviour
 {
     private bool _isCollected;
     private Animator _animator;
