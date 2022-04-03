@@ -14,13 +14,15 @@ public class Enemy : MonoBehaviour, IObjectForCollect
     private bool _isCollected;
     private EnemyStateMachine _stateMachine;
     private EnemyVision _enemyVision;
+    private CapsuleCollider _capsuleCollider;
+    private AudioSource _audioSource;
 
     public Animator Animator { get; private set; }
     public NavMeshAgent Agent { get; private set; }
     public Transform CurrentTarget { get; private set; }
     public Transform[] PathTargetList => _pathTargetList;
     public EnemyVision EnemyVision => _enemyVision;
-    public ObjectForCollect Type => ObjectForCollect.Enemy;
+    public ObjectForCollectType Type => ObjectForCollectType.Enemy;
 
 
     public Transform CurrentTransform => transform;
@@ -37,6 +39,8 @@ public class Enemy : MonoBehaviour, IObjectForCollect
         Animator = GetComponent<Animator>();
         Agent = GetComponent<NavMeshAgent>();
         _enemyVision = GetComponent<EnemyVision>();
+        _capsuleCollider = GetComponent<CapsuleCollider>();
+        _audioSource = GetComponent<AudioSource>();
         _startPosition = transform.position;
     }
 
@@ -46,10 +50,9 @@ public class Enemy : MonoBehaviour, IObjectForCollect
         _stateMachine
             .AddState(new PatrolStateEnemy(this, _stateMachine, this))
             .AddState(new WaitStateEnemy(this, _stateMachine))
-            .AddState(new ShootStateEnemy(this, _stateMachine))
+            .AddState(new ShootStateEnemy(this, _stateMachine, this))
             .AddState(new CollectedStateEnemy(this, _stateMachine))
             .AddState(new WantedStateEnemy(this, _stateMachine, this));
-
 
         _stateMachine.Initialize();
     }
@@ -58,6 +61,11 @@ public class Enemy : MonoBehaviour, IObjectForCollect
     {
         _enemyVision.PlayerDetected += OnDetectedPlayer;
         _enemyVision.PlayerLost += OnLostPlayer;
+    }
+
+    private void Update()
+    {
+        _stateMachine.CurrentState.UpdateLogic();
     }
 
     private void OnLostPlayer()
@@ -69,18 +77,16 @@ public class Enemy : MonoBehaviour, IObjectForCollect
     {
         CurrentTarget = newTarget;
         _stateMachine.SwitchState<ShootStateEnemy>();
+       
     }
 
     public void SetStateCollected()
     {
         _isCollected = true;
         Agent.enabled = false;
+        _capsuleCollider.isTrigger = true;
+        _audioSource.Play();
         _stateMachine.SwitchState<CollectedStateEnemy>();
-
     }
 
-    private void Update()
-    {
-        _stateMachine.CurrentState.UpdateLogic();
-    }
 }

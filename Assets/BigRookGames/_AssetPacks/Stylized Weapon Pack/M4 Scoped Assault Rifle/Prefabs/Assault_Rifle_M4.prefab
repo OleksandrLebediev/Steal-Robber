@@ -148,7 +148,7 @@ MonoBehaviour:
   muzzlePrefab: {fileID: 1336949550903370, guid: 4543ab5e3d405ec40a8d4e9aa5165030, type: 3}
   muzzlePosition: {fileID: 7981648180778114324}
   autoFire: 1
-  shotDelay: 1
+  shotDelay: 0.1
   rotate: 0
   rotationSpeed: 0.15
   scope: {fileID: 0}

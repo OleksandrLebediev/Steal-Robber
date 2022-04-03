@@ -24,12 +24,10 @@ public class Collector : MonoBehaviour
     private void TryCollect(IObjectForCollect itemForCollect)
     {
         if (itemForCollect.isCollected == true) return;
-
-        CollectItemAnimation(itemForCollect);
-
+        StartCoroutine(CollectObjectAnimation(itemForCollect));
     }
 
-    private async void CollectItemAnimation(IObjectForCollect itemForCollect)
+    private IEnumerator CollectObjectAnimation(IObjectForCollect itemForCollect)
     {
         float currentTime = 0;
         Vector4 target = _bag.GetPositionFreeCall();
@@ -59,14 +57,15 @@ public class Collector : MonoBehaviour
             itemForCollect.CurrentTransform.localPosition = new Vector3(roadX.Evaluate(currentTime), roadY.Evaluate(currentTime), roadZ.Evaluate(currentTime));
             itemForCollect.CurrentTransform.localRotation = Quaternion.Euler(0, roadYRotation.Evaluate(currentTime), 0);
             //itemForCollect.CurrentTransform.localRotation = Quaternion.AngleAxis(ancle.Evaluate(currentTime), Vector3.up);
-           // itemForCollect.CurrentTransform.localRotation = Quaternion.AngleAxis(ancle.Evaluate(currentTime), Vector3.up);
-           // itemForCollect.CurrentTransform.localScale = new Vector3(scaleDelta.Evaluate(currentTime),  scaleDelta.Evaluate(currentTime), scaleDelta.Evaluate(currentTime)); // Временная схема
-            await Task.Yield();
+            // itemForCollect.CurrentTransform.localRotation = Quaternion.AngleAxis(ancle.Evaluate(currentTime), Vector3.up);
+            // itemForCollect.CurrentTransform.localScale = new Vector3(scaleDelta.Evaluate(currentTime),  scaleDelta.Evaluate(currentTime), scaleDelta.Evaluate(currentTime)); // Временная схема
+            yield return null;
         }
 
         itemForCollect.CurrentTransform.localPosition = new Vector3(target.x + AnimationOfssetXPosition, target.y, target.z); // Установка кончных реультатов для кординат
        // itemForCollect.CurrentTransform.localRotation = Quaternion.AngleAxis(30, Vector3.up); // Установка кончных реультатов для поворота
-        itemForCollect.CurrentTransform.localScale = new Vector3(1, 1, 1); // Установка клнечного размера     
+        itemForCollect.CurrentTransform.localScale = new Vector3(1, 1, 1); // Установка клнечного размера
+                           yield break;
     }
 
 

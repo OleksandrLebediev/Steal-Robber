@@ -6,4 +6,5 @@ public class EnemyAnimationInfo : MonoBehaviour
 {
     public const string Move = "move"; 
     public const string Falling = "falling"; 
+    public const string Shoot = "shoot"; 
 }

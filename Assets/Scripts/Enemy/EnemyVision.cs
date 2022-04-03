@@ -80,11 +80,6 @@ public class EnemyVision : MonoBehaviour
                     }
                     
                 }
-
-                //if (currentVisibleTargets[i].TryGetComponent<Player>(out Player player))
-                //{
-                   
-                //}
             }
         }
 

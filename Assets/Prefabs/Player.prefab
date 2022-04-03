@@ -1060,7 +1060,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 915d2ee5392b60048acaeaab2e78fb64, type: 2}
+  - {fileID: 2100000, guid: adbdc159a3d611541ab936fd083f47cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1339,7 +1339,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 0.75
-  m_Radius: 0.08
+  m_Radius: 0.12
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08

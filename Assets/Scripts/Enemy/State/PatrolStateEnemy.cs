@@ -70,6 +70,7 @@ public class PatrolStateEnemy : EnemyState
             yield return null;
         }
     }
+
     private IEnumerator Rotation(Vector3 target)
     {
         while (true)

@@ -6,11 +6,11 @@ public interface IObjectForCollect
 {
     public Transform CurrentTransform { get; }
     public bool isCollected { get;}
-    public ObjectForCollect Type { get; }
+    public ObjectForCollectType Type { get; }
     public void SetStateCollected();
 }
 
-public enum ObjectForCollect
+public enum ObjectForCollectType
 {
     Enemy,
     Animal,

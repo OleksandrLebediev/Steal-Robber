@@ -20,5 +20,4 @@ public class CollectedStateEnemy : EnemyState
         _enemy.Animator.SetBool(EnemyAnimationInfo.Falling, false);
     }
 
-
 }

@@ -19,7 +19,7 @@ public class Bag : MonoBehaviour
         _objects.Add(part);
     }
 
-    public IObjectForCollect GetItem()
+    public IObjectForCollect GetCollectObject()
     {
         if (_objects.Count == 0) return null;
 
@@ -28,7 +28,6 @@ public class Bag : MonoBehaviour
         ObjectsAmountChanged?.Invoke(AmountObjects);
         return item;
     }
- 
 
     public Vector3 GetPositionFreeCall()
     {
