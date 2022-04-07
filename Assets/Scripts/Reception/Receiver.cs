@@ -1,19 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Receiver : MonoBehaviour
 {
     [Header("Receiver")]
-    [SerializeField] private int _amountObjectsToAccept;
-    [SerializeField] private ObjectForCollectType _objectForCollectType;
     [SerializeField] private Transform _receptionPoint;
     [SerializeField] private ReceptionZone _receptionZone;
-    [SerializeField] private ReceptionDisplay _receptionDisplay;
+
+    private ObjectForCollectType _objectForCollectType;
+
+    public event UnityAction ObjectAccepted;
+
+    public virtual void Initialize(ObjectForCollectType objectForCollectType)
+    {
+        _objectForCollectType = objectForCollectType;
+    }
 
     public virtual void Start()
     {
-        _receptionDisplay.Initialize(_amountObjectsToAccept);
         _receptionZone.Initialize(_objectForCollectType, _receptionPoint);
+    }
+
+    public virtual void OnEnable()
+    {
+        _receptionZone.ObjectAccepted += OnObjectAccepted;
+    }
+
+    public virtual void OnDestroy()
+    {
+        _receptionZone.ObjectAccepted -= OnObjectAccepted;
+    }
+
+    private void OnObjectAccepted()
+    {
+        ObjectAccepted?.Invoke();
     }
 }

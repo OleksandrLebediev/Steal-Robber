@@ -8,6 +8,7 @@ public interface IObjectForCollect
     public bool isCollected { get;}
     public ObjectForCollectType Type { get; }
     public void SetStateCollected();
+    public void Remove();
 }
 
 public enum ObjectForCollectType

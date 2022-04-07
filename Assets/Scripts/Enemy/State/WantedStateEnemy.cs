@@ -17,26 +17,26 @@ public class WantedStateEnemy : EnemyState
 
     public override void Enter()
     {
-        _enemy.Animator.SetBool(EnemyAnimationInfo.Move, true);
+
+        _enemy.Animator.SetBool(EnemyAnimationInfo.Move, false);
         _enemy.Agent.speed = _enemy.MoveSpeed;
-        _enemy.Agent.isStopped = false;
         _target = _enemy.CurrentTarget.position;
         _countSearch = 4;
         _timeWay = 0;
-
         _mono.StartCoroutine(WantedCoroutine());
     }
 
     public override void Exit()
     {
-        _enemy.Animator.SetBool(EnemyAnimationInfo.Move, false);
         _mono.StopAllCoroutines();
-        if(_enemy.Agent.isActiveAndEnabled == true)
-            _enemy.Agent.isStopped = true;
+        if (_enemy.Agent.isActiveAndEnabled == true)
+            _enemy.Agent.ResetPath();
     }
 
     private IEnumerator WantedCoroutine()
     {
+        yield return new WaitForSeconds(1f);
+
         while (_countSearch > 0)
         {
             yield return _mono.StartCoroutine(MoveToTarget(_target));

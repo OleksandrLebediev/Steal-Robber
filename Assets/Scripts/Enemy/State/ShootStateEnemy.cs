@@ -1,7 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections;
 using UnityEngine;
-using System.Collections;
-using System.Threading.Tasks;
 
 
 public class ShootStateEnemy : EnemyState
@@ -12,10 +10,12 @@ public class ShootStateEnemy : EnemyState
     }
 
     private MonoBehaviour _mono;
-    private float _timeRecharge = 1;
+    private float timeLastFired;
+    private float shotDelay = .5f;
 
     public override void Enter()
     {
+        timeLastFired = 0;
         _mono.StartCoroutine(ShootCoroutine());
     }
 
@@ -28,12 +28,19 @@ public class ShootStateEnemy : EnemyState
 
     private IEnumerator ShootCoroutine()
     {
+        _enemy.Animator.SetBool(EnemyAnimationInfo.Shoot, true);
+        yield return new WaitForSeconds(0.25f);
+
         while (true)
         {
-            _enemy.Animator.SetBool(EnemyAnimationInfo.Shoot, true);
-            yield return new WaitForSeconds(1f);
-            _enemy.Animator.SetBool(EnemyAnimationInfo.Shoot, false);
-            yield return new WaitForSeconds(1f);
+
+            if ((timeLastFired + shotDelay) <= Time.time)
+            {
+                timeLastFired = Time.time;
+                _enemy.Weapon.Fire();
+                _enemy.TargetPlayer.TakeDamage(10);
+            }
+            yield return null;
         }
     }
 

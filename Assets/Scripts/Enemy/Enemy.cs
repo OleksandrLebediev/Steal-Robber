@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour, IObjectForCollect
     public Animator Animator { get; private set; }
     public NavMeshAgent Agent { get; private set; }
     public Transform CurrentTarget { get; private set; }
+    public ITargetPlayer TargetPlayer { get; private set; }
+    public Weapon Weapon { get; private set; }
     public Transform[] PathTargetList => _pathTargetList;
     public EnemyVision EnemyVision => _enemyVision;
     public ObjectForCollectType Type => ObjectForCollectType.Enemy;
@@ -38,6 +40,7 @@ public class Enemy : MonoBehaviour, IObjectForCollect
     {
         Animator = GetComponent<Animator>();
         Agent = GetComponent<NavMeshAgent>();
+        Weapon = GetComponentInChildren<Weapon>();
         _enemyVision = GetComponent<EnemyVision>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _audioSource = GetComponent<AudioSource>();
@@ -55,6 +58,7 @@ public class Enemy : MonoBehaviour, IObjectForCollect
             .AddState(new WantedStateEnemy(this, _stateMachine, this));
 
         _stateMachine.Initialize();
+        Weapon.Initialize(_audioSource);
     }
 
     private void OnEnable()
@@ -63,9 +67,16 @@ public class Enemy : MonoBehaviour, IObjectForCollect
         _enemyVision.PlayerLost += OnLostPlayer;
     }
 
+    private void OnDestroy()
+    {
+        _enemyVision.PlayerDetected -= OnDetectedPlayer;
+        _enemyVision.PlayerLost -= OnLostPlayer;
+    }
+
     private void Update()
     {
         _stateMachine.CurrentState.UpdateLogic();
+        Debug.Log(_stateMachine.CurrentState);
     }
 
     private void OnLostPlayer()
@@ -73,9 +84,10 @@ public class Enemy : MonoBehaviour, IObjectForCollect
         _stateMachine.SwitchState<WantedStateEnemy>();
     }
 
-    private void OnDetectedPlayer(Transform newTarget)
+    private void OnDetectedPlayer(ITargetPlayer newTarget)
     {
-        CurrentTarget = newTarget;
+        CurrentTarget = newTarget.Position;
+        TargetPlayer = newTarget;
         _stateMachine.SwitchState<ShootStateEnemy>();
        
     }
@@ -89,4 +101,8 @@ public class Enemy : MonoBehaviour, IObjectForCollect
         _stateMachine.SwitchState<CollectedStateEnemy>();
     }
 
+    public void Remove()
+    {
+        Destroy(gameObject);
+    }
 }

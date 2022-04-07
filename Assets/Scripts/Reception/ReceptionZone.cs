@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ReceptionZone : MonoBehaviour
 {
+    [SerializeField] private AudioSource _audioSource;
+
     private ObjectForCollectType _objectForCollectType;
     private Transform _recipient;
 
     private readonly float _timeCollection = 0.7f;
     private readonly float _delayReceipt = 0.2f;
 
-
-    [SerializeField] private AudioSource _audioSource;
+    public event UnityAction ObjectAccepted;
 
     public virtual void Awake()
     {
@@ -73,5 +75,7 @@ public class ReceptionZone : MonoBehaviour
 
         objectForCollect.CurrentTransform.localPosition = new Vector3(target.x, target.y, target.z);                                                                                                                       // itemForCollect.CurrentTransform.localRotation = Quaternion.AngleAxis(30, Vector3.up); // Установка кончных реультатов для поворота
         objectForCollect.CurrentTransform.localScale = new Vector3(1, 1, 1);
+        objectForCollect.Remove();
+        ObjectAccepted?.Invoke();
     }
 }

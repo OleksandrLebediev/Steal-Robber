@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface ITargetPlayer
 {
-    public Vector3 Position { get; }
+    public bool IsDead { get; }
+    public Transform Position { get; }
+    public void TakeDamage(int damage);
 }

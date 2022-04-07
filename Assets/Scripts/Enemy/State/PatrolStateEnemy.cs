@@ -15,6 +15,7 @@ public class PatrolStateEnemy : EnemyState
 
     public override void Enter()
     {
+        _enemy.Animator.SetBool(EnemyAnimationInfo.Move, false);
         if (_enemy.PathTargetList.Length != 0)
         {
             _currentPath = 0;
@@ -22,16 +23,14 @@ public class PatrolStateEnemy : EnemyState
             _enemy.Agent.speed = _enemy.MoveSpeed;
             _mono.StartCoroutine(PatrulCoroutine());
         }
-        _enemy.Agent.isStopped = false;
     }
 
     public override void Exit()
     {
-        _enemy.Animator.SetBool(EnemyAnimationInfo.Move, false);
-
+        //_enemy.Animator.SetBool(EnemyAnimationInfo.Move, false);
         _mono.StopAllCoroutines();
         if (_enemy.Agent.isActiveAndEnabled == true)
-            _enemy.Agent.isStopped = true;
+            _enemy.Agent.ResetPath();
     }
 
     private IEnumerator PatrulCoroutine()

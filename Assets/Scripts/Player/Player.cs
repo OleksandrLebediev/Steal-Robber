@@ -1,11 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
 public class Player : Character, IPlayer, ITargetPlayer
 {
+    [SerializeField] private int _maxHealth;
+    [SerializeField] private HealthBarDisplay _healthBarDisplay;
+
     private CharacterController _characterController;
     public CharacterController CharacterController => _characterController;
-    public Vector3 Position => transform.position;
+    public Transform Position => transform;
+    public bool IsDead => _isDead;
+
+    private int _currentHealth;
+    private bool _isDead;
+
+    //public event UnityAction Dead;
 
     protected override void Awake()
     {
@@ -22,6 +32,22 @@ public class Player : Character, IPlayer, ITargetPlayer
         
 
         _characterStateMachine.Initialize();
+        _currentHealth = _maxHealth;
     }
+
+    public void TakeDamage(int damage)
+    {
+        if (_currentHealth <= 0)
+        {
+            _isDead = true;
+            GlobalEventManager.SendPlayerDead();
+            //Dead?.Invoke();
+        }
+
+        _healthBarDisplay.gameObject.SetActive(true);
+        _currentHealth -= damage;
+        float _healthFill = (float)_currentHealth / (float)_maxHealth;
+        _healthBarDisplay.UpdateUIBar(_healthFill);
+    }    
 
 }

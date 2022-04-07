@@ -23,16 +23,17 @@ public class EnemyVision : MonoBehaviour
 
     [SerializeField] private MeshFilter _visionMeshFilter;
     private Mesh _visionMesh;
-    private Transform _targetPlayer;
+    private ITargetPlayer _targetPlayer;
     private bool _playerIsDetected;
 
 
-    public event UnityAction<Transform> PlayerDetected;
+    public event UnityAction<ITargetPlayer> PlayerDetected;
     public event UnityAction PlayerLost;
 
     public void Hide()
     {
         _visionMeshFilter.gameObject.SetActive(false);
+        StopAllCoroutines();
         enabled = false;
     }
 
@@ -74,9 +75,10 @@ public class EnemyVision : MonoBehaviour
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
                 if (!Physics.Raycast(transform.position, direction, dstToTarget, _obstacleMask))
                 {
-                    if (currentVisibleTargets[i].TryGetComponent<Player>(out Player player))
+                    if (currentVisibleTargets[i].TryGetComponent<ITargetPlayer>(out ITargetPlayer player))
                     {
-                        _targetPlayer = player.transform;
+                        if (player.IsDead == false)
+                            _targetPlayer = player;
                     }
                     
                 }
