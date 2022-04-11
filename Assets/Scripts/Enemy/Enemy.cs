@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour, IObjectForCollect
     [SerializeField] private Transform[] _pathTargetList;
 
     private bool _isCollected;
-    private EnemyStateMachine _stateMachine;
+    private StateMachine _stateMachine;
     private EnemyVision _enemyVision;
     private CapsuleCollider _capsuleCollider;
     private AudioSource _audioSource;
@@ -49,13 +49,12 @@ public class Enemy : MonoBehaviour, IObjectForCollect
 
     private void Start()
     {
-        _stateMachine = new EnemyStateMachine();
+        _stateMachine = new StateMachine();
         _stateMachine
-            .AddState(new PatrolStateEnemy(this, _stateMachine, this))
-            .AddState(new WaitStateEnemy(this, _stateMachine))
-            .AddState(new ShootStateEnemy(this, _stateMachine, this))
-            .AddState(new CollectedStateEnemy(this, _stateMachine))
-            .AddState(new WantedStateEnemy(this, _stateMachine, this));
+            .AddState(new PatrolStateEnemy(_stateMachine, this, this))
+            .AddState(new ShootStateEnemy(_stateMachine, this, this))
+            .AddState(new CollectedStateEnemy(_stateMachine, this))
+            .AddState(new WantedStateEnemy(_stateMachine, this, this));
 
         _stateMachine.Initialize();
         Weapon.Initialize(_audioSource);
@@ -76,7 +75,6 @@ public class Enemy : MonoBehaviour, IObjectForCollect
     private void Update()
     {
         _stateMachine.CurrentState.UpdateLogic();
-        Debug.Log(_stateMachine.CurrentState);
     }
 
     private void OnLostPlayer()

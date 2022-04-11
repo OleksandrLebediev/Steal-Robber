@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class WantedStateEnemy : EnemyState
+public class WantedStateEnemy : BaseState
 {
-    public WantedStateEnemy(Enemy enemy, EnemyStateMachine stateMachine, MonoBehaviour mono) : base(enemy, stateMachine)
+    public WantedStateEnemy(IStationStateSwitcher stateSwitcher, Enemy enemy, MonoBehaviour mono) : base(stateSwitcher)
     {
+        _enemy = enemy;
         _mono = mono;
     }
 
+    private Enemy _enemy;
     private MonoBehaviour _mono;
     private Vector3 _target;
     private int _countSearch = 3;
@@ -52,7 +54,7 @@ public class WantedStateEnemy : EnemyState
             yield return null;
         }
 
-        _stateMachine.SwitchState<PatrolStateEnemy>();
+        _stateSwitcher.SwitchState<PatrolStateEnemy>();
     }
 
     private IEnumerator MoveToTarget(Vector3 target)

@@ -2,14 +2,16 @@
 using UnityEngine;
 
 
-public class ShootStateEnemy : EnemyState
+public class ShootStateEnemy : BaseState
 {
-    public ShootStateEnemy(Enemy enemy, EnemyStateMachine stateMachine, MonoBehaviour mono) : base(enemy, stateMachine)
+    public ShootStateEnemy(IStationStateSwitcher stateSwitcher, Enemy enemy, MonoBehaviour mono) : base(stateSwitcher)
     {
+        _enemy = enemy;
         _mono = mono;
     }
 
     private MonoBehaviour _mono;
+    private Enemy _enemy;
     private float timeLastFired;
     private float shotDelay = .5f;
 

@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class CollectedStateEnemy : EnemyState
+public class CollectedStateEnemy : BaseState
 {
-    public CollectedStateEnemy(Enemy enemy, EnemyStateMachine stateMachine) : base(enemy, stateMachine)
+    public CollectedStateEnemy(IStationStateSwitcher stateSwitcher, Enemy enemy) : base(stateSwitcher)
     {
-
+        _enemy = enemy;
     }
+
+    private Enemy _enemy;
 
     public override void Enter()
     {

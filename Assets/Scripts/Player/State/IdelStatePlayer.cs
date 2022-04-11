@@ -1,14 +1,12 @@
-﻿public class IdelStatePlayer : CharacterState
+﻿public class IdelStatePlayer : BaseState
 {
-    public IdelStatePlayer(Character character, CharacterStateMachine stateMachine) : base(character, stateMachine)
-    {
-    }
+    public IdelStatePlayer(IStationStateSwitcher stateSwitcher) : base(stateSwitcher) { }
 
     public override void UpdateLogic()
     {
         if (JoystickInput.Instance.MovementInput.magnitude > 0)
         {
-            _stateMachine.SwitchState<MoveStatePlayer>();
+            _stateSwitcher.SwitchState<MoveStatePlayer>();
         }
     }
 }

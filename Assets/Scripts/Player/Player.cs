@@ -1,38 +1,49 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
-[RequireComponent(typeof(CharacterController))]
-public class Player : Character, IPlayer, ITarget, ISender
+//[RequireComponent(typeof(CharacterController))]
+public class Player : MonoBehaviour, ITarget, ISender
 {
     [SerializeField] private int _maxHealth;
+    [SerializeField] private float _moveSpeed = 2;
+    [SerializeField] private float _turningSpeed = 10;
     [SerializeField] private HealthBarDisplay _healthBarDisplay;
-    public AudioSource _audioSource;
+
+    public float MoveSpeed => _moveSpeed;
+    public float TurningSpeed => _turningSpeed;
+    private StateMachine _stateMachine;
 
     private CharacterController _characterController;
     public CharacterController CharacterController => _characterController;
+    public Rigidbody Rigidbody;
+    public Animator Animator { get; private set; }
+    public Bag Bag { get; private set; }
     public Transform Position => transform;
     public bool IsDead => _isDead;
 
     private int _currentHealth;
     private bool _isDead;
 
-    //public event UnityAction Dead;
-
-    protected override void Awake()
+    private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
-        base.Awake();
+        Animator = GetComponent<Animator>();
+        Rigidbody = GetComponent<Rigidbody>();
+        Bag = GetComponent<Bag>();
     }
 
     private void Start()
     {
-        _characterStateMachine = new CharacterStateMachine();
-        _characterStateMachine
-            .AddState(new IdelStatePlayer(this, _characterStateMachine))
-            .AddState(new MoveStatePlayer(this, _characterStateMachine, this));
-        
-        _characterStateMachine.Initialize();
+        _stateMachine = new StateMachine();
+        _stateMachine
+            .AddState(new IdelStatePlayer(_stateMachine))
+            .AddState(new MoveStatePlayer(_stateMachine, this));
+
+        _stateMachine.Initialize();
         _currentHealth = _maxHealth;
+    }
+    private void Update()
+    {
+        _stateMachine.CurrentState.UpdateLogic();
     }
 
     public void TakeDamage(int damage)
@@ -41,13 +52,12 @@ public class Player : Character, IPlayer, ITarget, ISender
         {
             _isDead = true;
             GlobalEventManager.SendPlayerDead();
-            //Dead?.Invoke();
         }
 
         _healthBarDisplay.Show();
         _currentHealth -= damage;
         float _healthFill = (float)_currentHealth / (float)_maxHealth;
         _healthBarDisplay.UpdateUIBar(_healthFill);
-    }    
+    }
 
 }

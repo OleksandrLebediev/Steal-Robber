@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class CharacterStateMachine
+public class StateMachine : IStationStateSwitcher 
 {
-    public CharacterState CurrentState { get; private set; }
-    private List<CharacterState> _allStates = new List<CharacterState>();
+    public BaseState CurrentState { get; private set; }
+    private List<BaseState> _allStates = new List<BaseState>();
 
     public void Initialize()
     {
@@ -12,13 +14,13 @@ public class CharacterStateMachine
         CurrentState.Enter();
     }
 
-    public CharacterStateMachine AddState(CharacterState state)
+    public StateMachine AddState(BaseState state)
     {
         _allStates.Add(state);
         return this;
     }
 
-    public void SwitchState<T>() where T : CharacterState
+    public void SwitchState<T>() where T : BaseState
     {
         CurrentState.Exit();
         var state = _allStates.FirstOrDefault(s => s is T);

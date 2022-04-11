@@ -1,17 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolStateEnemy : EnemyState
+public class PatrolStateEnemy : BaseState
 {
-    public PatrolStateEnemy(Enemy enemy, EnemyStateMachine stateMachine, MonoBehaviour mono) : base(enemy, stateMachine)
-    {
-        _mono = mono;
-    }
-
     private MonoBehaviour _mono;
+    private Enemy _enemy;
     private Vector3 _target;
     private int _currentPath;
+
+    public PatrolStateEnemy(IStationStateSwitcher stateSwitcher, Enemy enemy, MonoBehaviour mono) : base(stateSwitcher)
+    {
+        _enemy = enemy;
+        _mono = mono;
+    }
 
     public override void Enter()
     {
@@ -27,7 +28,6 @@ public class PatrolStateEnemy : EnemyState
 
     public override void Exit()
     {
-        //_enemy.Animator.SetBool(EnemyAnimationInfo.Move, false);
         _mono.StopAllCoroutines();
         if (_enemy.Agent.isActiveAndEnabled == true)
             _enemy.Agent.ResetPath();
@@ -84,6 +84,5 @@ public class PatrolStateEnemy : EnemyState
             }
             yield return null;
         }
-
     }
 }
