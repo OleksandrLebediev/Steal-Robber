@@ -5,36 +5,33 @@ using UnityEngine.Events;
 
 public class EnemyVision : MonoBehaviour
 {
-
     [SerializeField] private float _angle;
     [SerializeField] private float _radius;
 
     [SerializeField] private LayerMask _targetMask;
     [SerializeField] private LayerMask _obstacleMask;
 
-    private Transform _visibleTargets;
-    private float _delayUpdateFindTargets = 0.2f;
-
     [SerializeField] private float _meshRay;
     [SerializeField] private int edgeResolveIterations;
     [SerializeField] private float edgeDstThreshold;
     [SerializeField] private float maskCutawayDst = .1f;
-
-
     [SerializeField] private MeshFilter _visionMeshFilter;
+
+    [SerializeField] private Material _visionMaterial;
+    [SerializeField] private Material _visionDetectedMaterial;
+
     private Mesh _visionMesh;
-    private ITargetPlayer _targetPlayer;
+    private ITarget _targetPlayer;
     private bool _playerIsDetected;
+    private float _delayUpdateFindTargets = 0.2f;
+    private MeshRenderer _renderer;
 
-
-    public event UnityAction<ITargetPlayer> PlayerDetected;
+    public event UnityAction<ITarget> PlayerDetected;
     public event UnityAction PlayerLost;
 
-    public void Hide()
+    private void Awake()
     {
-        _visionMeshFilter.gameObject.SetActive(false);
-        StopAllCoroutines();
-        enabled = false;
+        _renderer = _visionMeshFilter.gameObject.GetComponent<MeshRenderer>();
     }
 
     private void Start()
@@ -42,13 +39,20 @@ public class EnemyVision : MonoBehaviour
         _visionMesh = new Mesh();
         _visionMesh.name = "Vision Mesh";
         _visionMeshFilter.mesh = _visionMesh;
-
+        _renderer.material = _visionMaterial;
         StartCoroutine(FindTargetsWithDelay());
     }
 
     private void LateUpdate()
     {
         DrawVision();
+    }
+
+    public void Hide()
+    {
+        _visionMeshFilter.gameObject.SetActive(false);
+        StopAllCoroutines();
+        enabled = false;
     }
 
     private IEnumerator FindTargetsWithDelay()
@@ -75,7 +79,7 @@ public class EnemyVision : MonoBehaviour
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
                 if (!Physics.Raycast(transform.position, direction, dstToTarget, _obstacleMask))
                 {
-                    if (currentVisibleTargets[i].TryGetComponent<ITargetPlayer>(out ITargetPlayer player))
+                    if (currentVisibleTargets[i].TryGetComponent<ITarget>(out ITarget player))
                     {
                         if (player.IsDead == false)
                             _targetPlayer = player;
@@ -88,12 +92,15 @@ public class EnemyVision : MonoBehaviour
         if (_targetPlayer != null && _playerIsDetected == false)
         {
             PlayerDetected?.Invoke(_targetPlayer);
+            _renderer.material = _visionDetectedMaterial;
             _playerIsDetected = true;
+            
         }
 
         if (_targetPlayer == null && _playerIsDetected == true)
         {
             PlayerLost?.Invoke();
+            _renderer.material = _visionMaterial;
             _playerIsDetected = false;
         }
     }

@@ -13,7 +13,7 @@ public class ReceptionZone : MonoBehaviour
     private readonly float _timeCollection = 0.7f;
     private readonly float _delayReceipt = 0.2f;
 
-    public event UnityAction ObjectAccepted;
+    public event UnityAction<ISender> ObjectAccepted;
 
     public virtual void Awake()
     {
@@ -29,28 +29,28 @@ public class ReceptionZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Player>(out Player player))
+        if (other.TryGetComponent<ISender>(out ISender sender))
         {
-            if (player.Bag.isEmpty == true) return;
+            if (sender.Bag.isEmpty == true) return;
 
-            StartCoroutine(ReceptionCoroutine(player));
+            StartCoroutine(ReceptionCoroutine(sender));
         }
     }
 
-    private IEnumerator ReceptionCoroutine(Player player)
+    private IEnumerator ReceptionCoroutine(ISender sender)
     {
-        int amountObjects = player.Bag.AmountObjects;
+        int amountObjects = sender.Bag.AmountObjects;
 
         for (int i = 0; i < amountObjects; i++)
         {
-            IObjectForCollect objectForCollect = player.Bag.GetCollectObject();
+            IObjectForCollect objectForCollect = sender.Bag.GetCollectObject();
             if (objectForCollect.Type != _objectForCollectType) yield break;
-            StartCoroutine(CollectObjectAnimation(objectForCollect));
+            StartCoroutine(CollectObjectAnimation(objectForCollect, sender));
             yield return new WaitForSeconds(_delayReceipt);
         }
     }
 
-    private IEnumerator CollectObjectAnimation(IObjectForCollect objectForCollect)
+    private IEnumerator CollectObjectAnimation(IObjectForCollect objectForCollect, ISender sender)
     {
         float currentTime = 0;
         Vector3 target = _recipient.position;
@@ -76,6 +76,6 @@ public class ReceptionZone : MonoBehaviour
         objectForCollect.CurrentTransform.localPosition = new Vector3(target.x, target.y, target.z);                                                                                                                       // itemForCollect.CurrentTransform.localRotation = Quaternion.AngleAxis(30, Vector3.up); // Установка кончных реультатов для поворота
         objectForCollect.CurrentTransform.localScale = new Vector3(1, 1, 1);
         objectForCollect.Remove();
-        ObjectAccepted?.Invoke();
+        ObjectAccepted?.Invoke(sender);
     }
 }

@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour, IObjectForCollect
     public Animator Animator { get; private set; }
     public NavMeshAgent Agent { get; private set; }
     public Transform CurrentTarget { get; private set; }
-    public ITargetPlayer TargetPlayer { get; private set; }
+    public ITarget TargetPlayer { get; private set; }
     public Weapon Weapon { get; private set; }
     public Transform[] PathTargetList => _pathTargetList;
     public EnemyVision EnemyVision => _enemyVision;
@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour, IObjectForCollect
         _stateMachine.SwitchState<WantedStateEnemy>();
     }
 
-    private void OnDetectedPlayer(ITargetPlayer newTarget)
+    private void OnDetectedPlayer(ITarget newTarget)
     {
         CurrentTarget = newTarget.Position;
         TargetPlayer = newTarget;

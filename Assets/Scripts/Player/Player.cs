@@ -2,10 +2,11 @@
 using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
-public class Player : Character, IPlayer, ITargetPlayer
+public class Player : Character, IPlayer, ITarget, ISender
 {
     [SerializeField] private int _maxHealth;
     [SerializeField] private HealthBarDisplay _healthBarDisplay;
+    public AudioSource _audioSource;
 
     private CharacterController _characterController;
     public CharacterController CharacterController => _characterController;
@@ -30,7 +31,6 @@ public class Player : Character, IPlayer, ITargetPlayer
             .AddState(new IdelStatePlayer(this, _characterStateMachine))
             .AddState(new MoveStatePlayer(this, _characterStateMachine, this));
         
-
         _characterStateMachine.Initialize();
         _currentHealth = _maxHealth;
     }
@@ -44,7 +44,7 @@ public class Player : Character, IPlayer, ITargetPlayer
             //Dead?.Invoke();
         }
 
-        _healthBarDisplay.gameObject.SetActive(true);
+        _healthBarDisplay.Show();
         _currentHealth -= damage;
         float _healthFill = (float)_currentHealth / (float)_maxHealth;
         _healthBarDisplay.UpdateUIBar(_healthFill);

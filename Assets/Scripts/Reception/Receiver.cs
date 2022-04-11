@@ -11,7 +11,7 @@ public abstract class Receiver : MonoBehaviour
 
     private ObjectForCollectType _objectForCollectType;
 
-    public event UnityAction ObjectAccepted;
+    public event UnityAction<ISender> ObjectAccepted;
 
     public virtual void Initialize(ObjectForCollectType objectForCollectType)
     {
@@ -33,8 +33,8 @@ public abstract class Receiver : MonoBehaviour
         _receptionZone.ObjectAccepted -= OnObjectAccepted;
     }
 
-    private void OnObjectAccepted()
+    private void OnObjectAccepted(ISender sender)
     {
-        ObjectAccepted?.Invoke();
+        ObjectAccepted?.Invoke(sender);
     }
 }

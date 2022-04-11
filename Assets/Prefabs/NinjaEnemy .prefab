@@ -2147,11 +2147,11 @@ GameObject:
   - component: {fileID: 8419645338994600497}
   - component: {fileID: 176691373731012099}
   - component: {fileID: 8521573683634503814}
-  - component: {fileID: 3164043274048818976}
-  - component: {fileID: 7509015804836250023}
   - component: {fileID: 6957881717713490544}
   - component: {fileID: 1052069979432652383}
   - component: {fileID: 6926191671059538945}
+  - component: {fileID: 3164043274048818976}
+  - component: {fileID: 7509015804836250023}
   m_Layer: 0
   m_Name: 'NinjaEnemy '
   m_TagString: Enemy
@@ -2217,46 +2217,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3164043274048818976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6631688968445998669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 475fb58e472ff8548996fcefe5c09f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _angle: 45
-  _radius: 2
-  _targetMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _obstacleMask:
-    serializedVersion: 2
-    m_Bits: 128
-  _meshRay: 1
-  edgeResolveIterations: 0
-  edgeDstThreshold: 0
-  maskCutawayDst: 0.1
-  _visionMeshFilter: {fileID: 8437609415694813654}
---- !u!114 &7509015804836250023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6631688968445998669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c6f6143a2b5ca4e97a60eefe8d235f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveSpeed: 1
-  _rotateSpeed: 2.5
-  _pathTargetList: []
 --- !u!136 &6957881717713490544
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2383,6 +2343,48 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3164043274048818976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6631688968445998669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475fb58e472ff8548996fcefe5c09f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _angle: 45
+  _radius: 2
+  _targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _meshRay: 1
+  edgeResolveIterations: 0
+  edgeDstThreshold: 0
+  maskCutawayDst: 0.1
+  _visionMeshFilter: {fileID: 8437609415694813654}
+  _visionMaterial: {fileID: 2100000, guid: a9ef942b30c29314585bec2e0bbf65fd, type: 2}
+  _visionDetectedMaterial: {fileID: 2100000, guid: 08123d221ea599d409f07360785c2996, type: 2}
+--- !u!114 &7509015804836250023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6631688968445998669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c6f6143a2b5ca4e97a60eefe8d235f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 1
+  _rotateSpeed: 2.5
+  _pathTargetList: []
 --- !u!1 &6693190406334520542
 GameObject:
   m_ObjectHideFlags: 0
