@@ -3,104 +3,59 @@ using UnityEngine;
 
 public class WantedStateEnemy : BaseState
 {
-    public WantedStateEnemy(IStationStateSwitcher stateSwitcher, Enemy enemy, MonoBehaviour mono) : base(stateSwitcher)
+    public WantedStateEnemy(IStationStateSwitcher stateSwitcher, EnemyMovement movement,
+        Animator animator, ITargeter targeter, MonoBehaviour mono) : base(stateSwitcher)
     {
-        _enemy = enemy;
         _mono = mono;
+        _movement = movement;
+        _animator = animator;
+        _targeter = targeter;
     }
 
-    private Enemy _enemy;
+    private EnemyMovement _movement;
     private MonoBehaviour _mono;
-    private Vector3 _target;
-    private int _countSearch = 3;
+    private Animator _animator;
+    private ITargeter _targeter;
 
-    private float _timeWay = 0;
-    private float _timeDelay = 2f;
+    private readonly int _numberOfSearches = 3;
+    private readonly float _maxTimeWay = 2f;
+    private readonly float _delayBeforeWanted = 1f;
+    private Vector3 _target;
+    private int _currentNumberOfSearches;
 
     public override void Enter()
     {
-
-        _enemy.Animator.SetBool(EnemyAnimationInfo.Move, false);
-        _enemy.Agent.speed = _enemy.MoveSpeed;
-        _target = _enemy.CurrentTarget.position;
-        _countSearch = 4;
-        _timeWay = 0;
+        _movement.Initialize();
+        _animator.SetBool(EnemyAnimationInfo.Move, false);
+        _target = _targeter.TargetPosition.VectorPosition;
+        _currentNumberOfSearches = _numberOfSearches;
         _mono.StartCoroutine(WantedCoroutine());
     }
 
     public override void Exit()
     {
         _mono.StopAllCoroutines();
-        if (_enemy.Agent.isActiveAndEnabled == true)
-            _enemy.Agent.ResetPath();
+        _movement.ResetAgentPaths();
     }
 
     private IEnumerator WantedCoroutine()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_delayBeforeWanted);
 
-        while (_countSearch > 0)
+        while (_currentNumberOfSearches > 0)
         {
-            yield return _mono.StartCoroutine(MoveToTarget(_target));
+            _animator.SetBool(EnemyAnimationInfo.Move, true);
+            yield return _mono.StartCoroutine(_movement.MoveToTargetCoroutine(_target, _maxTimeWay));
+            _animator.SetBool(EnemyAnimationInfo.Move, false);
 
-            _enemy.Animator.SetBool(EnemyAnimationInfo.Move, false);
-
-            Vector3 randomDirection = GetRandomLookTarget();
-            yield return _mono.StartCoroutine(Rotation(randomDirection));
+            Vector3 randomDirection = _movement.GetRandomDirection();
+            yield return _mono.StartCoroutine(_movement.RotationCoroutine(randomDirection));
 
             _target = randomDirection;
-            _countSearch--;
+            _currentNumberOfSearches--;
 
             yield return null;
         }
-
-        _stateSwitcher.SwitchState<PatrolStateEnemy>();
-    }
-
-    private IEnumerator MoveToTarget(Vector3 target)
-    {
-        _enemy.Animator.SetBool(EnemyAnimationInfo.Move, true);
-        Vector3 distance;
-
-        while (true)
-        {
-            _enemy.Agent.SetDestination(target);
-            distance = (_target - _enemy.transform.position);
-            distance.y = 0f;
-            if (distance.magnitude < 0.1f) yield break;
-
-            _timeWay += Time.deltaTime;
-            if (_timeWay >= _timeDelay)
-            {
-                _timeWay = 0;
-                if (_enemy.Agent.velocity.magnitude == 0) yield break;
-
-            }
-            yield return null;
-        }
-    }
-
-    private IEnumerator Rotation(Vector3 target)
-    {
-        while (true)
-        {
-            Vector3 lookPos = target - _enemy.transform.position;
-            lookPos.y = 0;
-            Quaternion rotation = Quaternion.LookRotation(lookPos);
-            _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, rotation, _enemy.RotateSpeed * Time.deltaTime);
-            if (Quaternion.Angle(_enemy.transform.rotation, rotation) <= 0.001f)
-            {
-                break;
-            }
-            yield return null;
-        }
-    }
-
-    private Vector3 GetRandomLookTarget()
-    {
-        Vector3 center = _enemy.transform.position;
-        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
-        Vector3 offset = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-        return center + offset;
+        _stateSwitcher.SwitchState<PatrolLoopStateEnemy>();
     }
 }

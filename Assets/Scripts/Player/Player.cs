@@ -1,33 +1,27 @@
 ﻿using UnityEngine;
 
-//[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(Bag))]
 public class Player : MonoBehaviour, ITarget, ISender
 {
-    [SerializeField] private int _maxHealth;
-    [SerializeField] private float _moveSpeed = 2;
-    [SerializeField] private float _turningSpeed = 10;
+    [SerializeField] private int _health;
     [SerializeField] private HealthBarDisplay _healthBarDisplay;
 
-    public float MoveSpeed => _moveSpeed;
-    public float TurningSpeed => _turningSpeed;
     private StateMachine _stateMachine;
-
-    private CharacterController _characterController;
-    public CharacterController CharacterController => _characterController;
-    public Rigidbody Rigidbody;
-    public Animator Animator { get; private set; }
-    public Bag Bag { get; private set; }
-    public Transform Position => transform;
-    public bool IsDead => _isDead;
-
+    private PlayerMovement _movement;
+    private Animator _animator; 
     private int _currentHealth;
-    private bool _isDead;
+
+    public Bag Bag { get; private set; }
+    public bool IsDead { get; private set; }
+    public Transform CurrentTransform => transform;
+    public Vector3 VectorPosition => transform.position;
+
 
     private void Awake()
     {
-        _characterController = GetComponent<CharacterController>();
-        Animator = GetComponent<Animator>();
-        Rigidbody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
+        _movement = GetComponent<PlayerMovement>();
         Bag = GetComponent<Bag>();
     }
 
@@ -36,11 +30,12 @@ public class Player : MonoBehaviour, ITarget, ISender
         _stateMachine = new StateMachine();
         _stateMachine
             .AddState(new IdelStatePlayer(_stateMachine))
-            .AddState(new MoveStatePlayer(_stateMachine, this));
+            .AddState(new MoveStatePlayer(_stateMachine, _movement, _animator));
 
         _stateMachine.Initialize();
-        _currentHealth = _maxHealth;
+        _currentHealth = _health;
     }
+
     private void Update()
     {
         _stateMachine.CurrentState.UpdateLogic();
@@ -50,14 +45,13 @@ public class Player : MonoBehaviour, ITarget, ISender
     {
         if (_currentHealth <= 0)
         {
-            _isDead = true;
+            IsDead = true;
             GlobalEventManager.SendPlayerDead();
         }
 
         _healthBarDisplay.Show();
         _currentHealth -= damage;
-        float _healthFill = (float)_currentHealth / (float)_maxHealth;
+        float _healthFill = (float)_currentHealth / (float)_health;
         _healthBarDisplay.UpdateUIBar(_healthFill);
     }
-
 }

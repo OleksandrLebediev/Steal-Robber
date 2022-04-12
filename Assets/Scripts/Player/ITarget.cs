@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ITarget: ILocation
+public interface ITarget: ILocation, IPosition
 {
     public bool IsDead { get; }
     public void TakeDamage(int damage);
@@ -10,7 +10,7 @@ public interface ITarget: ILocation
 
 public interface ILocation
 {
-    public Transform Position { get; }
+    public Transform CurrentTransform { get; }
 }
 
 public interface ISender: ILocation

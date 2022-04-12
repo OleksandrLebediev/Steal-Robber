@@ -4,53 +4,51 @@ using UnityEngine;
 
 public class ShootStateEnemy : BaseState
 {
-    public ShootStateEnemy(IStationStateSwitcher stateSwitcher, Enemy enemy, MonoBehaviour mono) : base(stateSwitcher)
+    public ShootStateEnemy(IStationStateSwitcher stateSwitcher, Animator animator,
+        EnemyMovement movement, IShooter shooter, MonoBehaviour mono) : base(stateSwitcher)
     {
-        _enemy = enemy;
+        _shooter = shooter;
+        _movement = movement;
+        _animator = animator;
         _mono = mono;
     }
 
     private MonoBehaviour _mono;
-    private Enemy _enemy;
-    private float timeLastFired;
-    private float shotDelay = .5f;
+    private Animator _animator;
+    private EnemyMovement _movement;
+    private IShooter _shooter;
+
+    private float _timeLastFired;
+    private float _shootDelay = .5f;
+    private float _delayBeforeFiring = 0.25f;
+    private float _damage = 10;
 
     public override void Enter()
     {
-        timeLastFired = 0;
+        _timeLastFired = 0;
         _mono.StartCoroutine(ShootCoroutine());
+        _mono.StartCoroutine(_movement.RotationCoroutine(_shooter.Target.CurrentTransform, true));
     }
 
     public override void Exit()
     {
         _mono.StopAllCoroutines();
-        _enemy.Animator.SetBool(EnemyAnimationInfo.Shoot, false);
+        _animator.SetBool(EnemyAnimationInfo.Shoot, false);
     }
-
 
     private IEnumerator ShootCoroutine()
     {
-        _enemy.Animator.SetBool(EnemyAnimationInfo.Shoot, true);
-        yield return new WaitForSeconds(0.25f);
+        _animator.SetBool(EnemyAnimationInfo.Shoot, true);
+        yield return new WaitForSeconds(_delayBeforeFiring);
 
         while (true)
         {
-
-            if ((timeLastFired + shotDelay) <= Time.time)
+            if ((_timeLastFired + _shootDelay) <= Time.time)
             {
-                timeLastFired = Time.time;
-                _enemy.Weapon.Fire();
-                _enemy.TargetPlayer.TakeDamage(10);
+                _timeLastFired = Time.time;
+                _shooter.Weapon.Fire(_shooter.Target);
             }
             yield return null;
         }
-    }
-
-    public override void UpdateLogic()
-    {
-        Vector3 lookPos = _enemy.CurrentTarget.position - _enemy.transform.position;
-        lookPos.y = 0;
-        Quaternion rotation = Quaternion.LookRotation(lookPos);
-        _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, rotation, _enemy.RotateSpeed * Time.deltaTime);
     }
 }

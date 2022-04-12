@@ -47,7 +47,7 @@ public abstract class Requester : MonoBehaviour
     private void OnObjectAccepted(ISender sender)
     {
         _numberOfRemainingTargets--;
-        _rewardDispenser.DispenseMonetaryRewardToTarget(_monetaryReward, transform.position, sender.Position);
+        _rewardDispenser.DispenseMonetaryRewardToTarget(_monetaryReward, transform.position, sender.CurrentTransform);
         _requestDisplay.UpdateAmountCollectObject(_numberOfRemainingTargets);
         CheckCompletionOfRequest();
     }

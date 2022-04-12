@@ -23,7 +23,7 @@ public class Collector : MonoBehaviour
 
     private void TryCollect(IObjectForCollect itemForCollect)
     {
-        if (itemForCollect.isCollected == true) return;
+        if (itemForCollect.IsCollected == true) return;
         StartCoroutine(CollectObjectAnimation(itemForCollect));
     }
 

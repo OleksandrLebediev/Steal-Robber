@@ -4,57 +4,62 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(EnemyVision))]
-[RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : MonoBehaviour, IObjectForCollect
+[RequireComponent(typeof (EnemyMovement))]
+public class Enemy : MonoBehaviour, IObjectForCollect, IShooter
 {
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotateSpeed;
-    [SerializeField] private Transform[] _pathTargetList;
+
 
     private bool _isCollected;
     private StateMachine _stateMachine;
     private EnemyVision _enemyVision;
     private CapsuleCollider _capsuleCollider;
     private AudioSource _audioSource;
+    private EnemyMovement _movement;
+    private Animator _animator;
 
-    public Animator Animator { get; private set; }
+    public Animator Animator => _animator;
+
     public NavMeshAgent Agent { get; private set; }
     public Transform CurrentTarget { get; private set; }
     public ITarget TargetPlayer { get; private set; }
     public Weapon Weapon { get; private set; }
-    public Transform[] PathTargetList => _pathTargetList;
     public EnemyVision EnemyVision => _enemyVision;
     public ObjectForCollectType Type => ObjectForCollectType.Enemy;
 
 
     public Transform CurrentTransform => transform;
-    public bool isCollected => _isCollected;
+    public bool IsCollected => _isCollected;
     public float MoveSpeed => _moveSpeed;
     public float RotateSpeed => _rotateSpeed;
-    public Vector3 StatrPosition => _startPosition;
 
+    public ITarget Target => _target;
+    public IPosition TargetPosition => _targePosition;
 
-    private Vector3 _startPosition;
+    private ITarget _target;
+    private IPosition _targePosition;
+
 
     private void Awake()
     {
-        Animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
         Agent = GetComponent<NavMeshAgent>();
         Weapon = GetComponentInChildren<Weapon>();
         _enemyVision = GetComponent<EnemyVision>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         _audioSource = GetComponent<AudioSource>();
-        _startPosition = transform.position;
+        _movement = GetComponent<EnemyMovement>();
     }
 
     private void Start()
     {
         _stateMachine = new StateMachine();
         _stateMachine
-            .AddState(new PatrolStateEnemy(_stateMachine, this, this))
-            .AddState(new ShootStateEnemy(_stateMachine, this, this))
+            .AddState(new PatrolLoopStateEnemy(_stateMachine, _movement,_animator ,this))
+            .AddState(new ShootStateEnemy(_stateMachine, _animator, _movement, this, this))
             .AddState(new CollectedStateEnemy(_stateMachine, this))
-            .AddState(new WantedStateEnemy(_stateMachine, this, this));
+            .AddState(new WantedStateEnemy(_stateMachine, _movement ,_animator , this, this));
 
         _stateMachine.Initialize();
         Weapon.Initialize(_audioSource);
@@ -84,10 +89,13 @@ public class Enemy : MonoBehaviour, IObjectForCollect
 
     private void OnDetectedPlayer(ITarget newTarget)
     {
-        CurrentTarget = newTarget.Position;
+        CurrentTarget = newTarget.CurrentTransform;
         TargetPlayer = newTarget;
-        _stateMachine.SwitchState<ShootStateEnemy>();
-       
+
+
+        _target = newTarget;
+        _targePosition = newTarget;
+        _stateMachine.SwitchState<ShootStateEnemy>();    
     }
 
     public void SetStateCollected()
