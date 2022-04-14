@@ -13,19 +13,23 @@ public class Bag : MonoBehaviour
     public bool isEmpty => _objects.Count == 0;
 
     public event UnityAction<int> ObjectsAmountChanged;
+    public event UnityAction Desolated;
+    public event UnityAction Filled;
 
     public void AddObject(IObjectForCollect part)
     {
+        if(isEmpty == true) Filled?.Invoke();
         _objects.Add(part);
     }
 
     public IObjectForCollect GetCollectObject()
     {
-        if (_objects.Count == 0) return null;
+        if (isEmpty == true) return null;
 
         IObjectForCollect item = _objects[AmountObjects - 1];
         _objects.Remove(item);
         ObjectsAmountChanged?.Invoke(AmountObjects);
+        if(isEmpty == true) Desolated?.Invoke();
         return item;
     }
 

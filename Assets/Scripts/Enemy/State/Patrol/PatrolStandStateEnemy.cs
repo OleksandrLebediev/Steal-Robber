@@ -12,6 +12,6 @@ public class PatrolStandStateEnemy : BaseState
 
     public override void Enter()
     {
-        _animator.SetBool(EnemyAnimationInfo.Move, false); 
+        _animator.SetBool(EnemyAnimationInfo.Walk, false); 
     }
 }

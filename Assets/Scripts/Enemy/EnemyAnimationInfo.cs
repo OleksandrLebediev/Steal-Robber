@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyAnimationInfo 
 {
-    public const string Move = "move"; 
+    public const string Walk = "walk"; 
+    public const string Run = "run"; 
     public const string Falling = "falling"; 
     public const string Shoot = "shoot"; 
 }

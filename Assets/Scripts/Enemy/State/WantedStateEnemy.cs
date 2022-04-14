@@ -25,8 +25,8 @@ public class WantedStateEnemy : BaseState
 
     public override void Enter()
     {
-        _movement.Initialize();
-        _animator.SetBool(EnemyAnimationInfo.Move, false);
+        _movement.Initialize(MovementType.Run);
+        _animator.SetBool(EnemyAnimationInfo.Run, false);
         _target = _targeter.TargetPosition.VectorPosition;
         _currentNumberOfSearches = _numberOfSearches;
         _mono.StartCoroutine(WantedCoroutine());
@@ -44,9 +44,9 @@ public class WantedStateEnemy : BaseState
 
         while (_currentNumberOfSearches > 0)
         {
-            _animator.SetBool(EnemyAnimationInfo.Move, true);
+            _animator.SetBool(EnemyAnimationInfo.Run, true);
             yield return _mono.StartCoroutine(_movement.MoveToTargetCoroutine(_target, _maxTimeWay));
-            _animator.SetBool(EnemyAnimationInfo.Move, false);
+            _animator.SetBool(EnemyAnimationInfo.Run, false);
 
             Vector3 randomDirection = _movement.GetRandomDirection();
             yield return _mono.StartCoroutine(_movement.RotationCoroutine(randomDirection));

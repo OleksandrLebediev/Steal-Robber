@@ -6,21 +6,33 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private Transform[] _pathTargetList;
-    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _walkSpeed;
+    [SerializeField] private float _runSpeed;
     [SerializeField] private float _rotateSpeed;
     public Transform[] PathTargetList => _pathTargetList;
 
     private NavMeshAgent _agent;
+    private CapsuleCollider _capsuleCollider;
     private int _currentPath;
 
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
-    public void Initialize()
+    public void Initialize(MovementType movementType = MovementType.Walk)
     {
-        _agent.speed = _moveSpeed;
+        switch (movementType)
+        {
+            case MovementType.Walk:
+                _agent.speed = _walkSpeed;
+                break;
+            case MovementType.Run:
+                _agent.speed = _runSpeed;
+                break;
+        }
+        
     }
 
     public void ResetAgentPaths()
@@ -99,5 +111,17 @@ public class EnemyMovement : MonoBehaviour
         Vector3 offset = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
         return center + offset;
     }
+
+    public void DestroyAgent()
+    {
+        _agent.enabled = false;
+        _capsuleCollider.isTrigger = true;
+    }
+}
+
+public enum MovementType
+{
+    Walk,
+    Run
 }
 

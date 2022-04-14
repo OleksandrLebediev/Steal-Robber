@@ -1,21 +1,25 @@
+using UnityEngine;
+
 public class CollectedStateEnemy : BaseState
 {
-    public CollectedStateEnemy(IStationStateSwitcher stateSwitcher, Enemy enemy) : base(stateSwitcher)
+    public CollectedStateEnemy(IStationStateSwitcher stateSwitcher,
+        Animator animator ,EnemyVision enemyVision) : base(stateSwitcher)
     {
-        _enemy = enemy;
+        _enemyVision = enemyVision;
+        _animator = animator;
     }
 
-    private Enemy _enemy;
+    private EnemyVision _enemyVision;
+    private Animator _animator;
 
     public override void Enter()
     {
-        _enemy.Animator.SetBool(EnemyAnimationInfo.Falling, true);
-        _enemy.EnemyVision.Hide();
+        _animator.SetBool(EnemyAnimationInfo.Falling, true);
+        _enemyVision.Hide();
     }
 
     public override void Exit()
     {
-        _enemy.Animator.SetBool(EnemyAnimationInfo.Falling, false);
+        _animator.SetBool(EnemyAnimationInfo.Falling, false);
     }
-
 }

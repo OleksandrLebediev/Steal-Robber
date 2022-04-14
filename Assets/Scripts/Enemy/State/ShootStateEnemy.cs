@@ -21,7 +21,6 @@ public class ShootStateEnemy : BaseState
     private float _timeLastFired;
     private float _shootDelay = .5f;
     private float _delayBeforeFiring = 0.25f;
-    private float _damage = 10;
 
     public override void Enter()
     {

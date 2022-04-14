@@ -19,7 +19,7 @@ public class PatrolLoopStateEnemy : BaseState
 
     public override void Enter()
     {
-        _animator.SetBool(EnemyAnimationInfo.Move, false);
+        _animator.SetBool(EnemyAnimationInfo.Walk, false);
         if (_movement.PathTargetList.Length != 0)
         {
             _movement.Initialize();
@@ -38,9 +38,9 @@ public class PatrolLoopStateEnemy : BaseState
     {
         while (true)
         {
-            _animator.SetBool(EnemyAnimationInfo.Move, true);
+            _animator.SetBool(EnemyAnimationInfo.Walk, true);
             yield return _mono.StartCoroutine(_movement.MoveToTargetCoroutine(_target));
-            _animator.SetBool(EnemyAnimationInfo.Move, false);
+            _animator.SetBool(EnemyAnimationInfo.Walk, false);
             yield return _waitForSeconds;
 
             _target = _movement.GetPath();

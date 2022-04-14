@@ -24,6 +24,7 @@ public class MoveStatePlayer : BaseState
     public override void UpdateLogic()
     {
         Vector3 direction = JoystickInput.Instance.MovementInput;
+
         _movement.Move(direction);
 
         if (direction.magnitude == 0)

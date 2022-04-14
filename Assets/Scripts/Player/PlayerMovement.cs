@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _speedRotation;
 
     private CharacterController _characterController;
+    private float _ground = 0.175000f;
 
     private void Awake()
     {
