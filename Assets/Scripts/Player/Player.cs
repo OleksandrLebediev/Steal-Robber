@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
-[RequireComponent(typeof(Bag))]
 public class Player : MonoBehaviour, ITarget, ISender
 {
     [SerializeField] private int _health;
@@ -9,6 +8,8 @@ public class Player : MonoBehaviour, ITarget, ISender
 
     private StateMachine _stateMachine;
     private PlayerMovement _movement;
+    private PlayerWallet _wallet;
+    private PlayerAnimatorOverrider _animatorOverrider;
     private Animator _animator; 
     private int _currentHealth;
 
@@ -16,13 +17,15 @@ public class Player : MonoBehaviour, ITarget, ISender
     public bool IsDead { get; private set; }
     public Transform CurrentTransform => transform;
     public Vector3 VectorPosition => transform.position;
-
+    public IAcceptingMoney Accepting  => _wallet;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _movement = GetComponent<PlayerMovement>();
-        Bag = GetComponent<Bag>();
+        _animatorOverrider = GetComponent<PlayerAnimatorOverrider>();
+        _wallet = GetComponentInChildren<PlayerWallet>();
+        Bag = GetComponentInChildren<Bag>();
     }
 
     private void Start()
@@ -33,6 +36,7 @@ public class Player : MonoBehaviour, ITarget, ISender
             .AddState(new MoveStatePlayer(_stateMachine, _movement, _animator));
 
         _stateMachine.Initialize();
+        _animatorOverrider.Initialize(_animator, Bag);
         _currentHealth = _health;
     }
 

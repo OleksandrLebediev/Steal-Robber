@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MonetaryRewardDispenser : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class MonetaryRewardDispenser : MonoBehaviour
     private Vector3 _offsetMoveTarget = Vector3.up;
     private float _soundDelay = 0.02f;
     private float _timeLastSound;
+
+    public event UnityAction MoneyMovedToTarget;
 
     public void Initialize(AudioSource audioSource)
     {
@@ -54,7 +57,8 @@ public class MonetaryRewardDispenser : MonoBehaviour
                     if ((_timeLastSound + _soundDelay) <= Time.time)
                     {
                         _timeLastSound = Time.time;
-                        _audioSource.PlayOneShot(_audioClip);
+                        MoneyMovedToTarget?.Invoke();
+                        _audioSource.PlayOneShot(_audioClip);                      
                     }
                 }
             }

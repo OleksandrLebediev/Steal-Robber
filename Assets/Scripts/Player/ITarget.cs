@@ -13,7 +13,9 @@ public interface ILocation
     public Transform CurrentTransform { get; }
 }
 
-public interface ISender: ILocation
+public interface ISender : ILocation
 {
     public Bag Bag { get; }
+    public IAcceptingMoney Accepting {get;}
 }
+

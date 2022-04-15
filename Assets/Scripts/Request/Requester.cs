@@ -14,6 +14,7 @@ public abstract class Requester : MonoBehaviour
 
     private AudioSource _audioSource;
     private MonetaryRewardDispenser _rewardDispenser;
+    private ISender _sender;
     private int _numberOfRemainingTargets;
 
     public bool IsCompleted { get; private set; }
@@ -37,15 +38,18 @@ public abstract class Requester : MonoBehaviour
     private void OnEnable()
     {
         _receiver.ObjectAccepted += OnObjectAccepted;
+        _rewardDispenser.MoneyMovedToTarget += OnMoneyMovedToTarget;
     }
 
     private void OnDestroy()
     {
         _receiver.ObjectAccepted -= OnObjectAccepted;
+        _rewardDispenser.MoneyMovedToTarget -= OnMoneyMovedToTarget;
     }
 
     private void OnObjectAccepted(ISender sender)
     {
+        if (_sender == null) _sender = sender;
         _numberOfRemainingTargets--;
         _rewardDispenser.DispenseMonetaryRewardToTarget(_monetaryReward, transform.position, sender.CurrentTransform);
         _requestDisplay.UpdateAmountCollectObject(_numberOfRemainingTargets);
@@ -59,5 +63,10 @@ public abstract class Requester : MonoBehaviour
             IsCompleted = true;
             RequestCompleted?.Invoke();
         }
+    }
+
+    private void OnMoneyMovedToTarget()
+    {
+        _sender.Accepting.AddMoney(1);
     }
 }

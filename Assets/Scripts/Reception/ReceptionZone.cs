@@ -63,8 +63,6 @@ public class ReceptionZone : MonoBehaviour
         roadY.AddKey(_timeCollection / 4, 1.5f);
         roadY.AddKey((_timeCollection / 4) * 2, 1.5f);
 
-
-
         AnimationCurve roadZ = AnimationCurve.EaseInOut(0, objectForCollect.CurrentTransform.localPosition.z, _timeCollection, target.z);
 
         for (currentTime = 0; currentTime <= _timeCollection; currentTime += Time.deltaTime)
