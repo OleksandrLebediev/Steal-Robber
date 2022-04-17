@@ -13,6 +13,12 @@ public class PlayerWallet : MonoBehaviour, IAcceptingMoney, IBalanceInformant
     public int AmountMoney => _amountMoney;
     public int AmountMoneyPerLevel => _moneyPerLevel;
 
+    public void Initialize(int amount)
+    {
+        _amountMoney = amount;
+        AmountMoneyChanged?.Invoke(amount);
+    }
+
     public void AddMoney(int amount)
     {
         _amountMoney += amount;

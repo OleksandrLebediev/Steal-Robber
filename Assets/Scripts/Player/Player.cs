@@ -19,7 +19,7 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
     public Transform CurrentTransform => transform;
     public Vector3 VectorPosition => transform.position;
     public IAcceptingMoney Accepting  => _wallet;
-    public IBalanceInformant BalanceInformant => _wallet;
+    public PlayerWallet Wallet => _wallet;
 
     public event UnityAction Dead;
 

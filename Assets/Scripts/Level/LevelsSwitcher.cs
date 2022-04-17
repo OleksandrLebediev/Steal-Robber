@@ -1,12 +1,16 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class LevelsSwitcher : MonoBehaviour, ILevelsInformant
 {
     private IUIAnswer _uIAnswer;
     private int _currentLevel;
+    private readonly string levelSceneName = "Level_";
 
     public int CurrentLevel => _currentLevel;
+
+    public event UnityAction LevelChanges;
 
     private void OnDestroy()
     {
@@ -14,9 +18,9 @@ public class LevelsSwitcher : MonoBehaviour, ILevelsInformant
         _uIAnswer.PressedNextButton -= StartNextLevel;
     }
 
-    public void Initialize(IUIAnswer uIAnswer)
+    public void Initialize(IUIAnswer uIAnswer, int currentLevel)
     {
-        _currentLevel = 0;
+        _currentLevel = currentLevel;
         _uIAnswer = uIAnswer;
         _uIAnswer.PressedRestartButton += RestartLevel;
         _uIAnswer.PressedNextButton += StartNextLevel;
@@ -24,7 +28,8 @@ public class LevelsSwitcher : MonoBehaviour, ILevelsInformant
 
     private void StartLevel(int level)
     {
-        SceneManager.LoadScene(level);
+        LevelChanges?.Invoke();
+        SceneManager.LoadScene(levelSceneName + level);
     }
 
     private void StartNextLevel()
@@ -32,9 +37,9 @@ public class LevelsSwitcher : MonoBehaviour, ILevelsInformant
         _currentLevel++;
         if (_currentLevel >= SceneManager.sceneCountInBuildSettings)
         {
-            _currentLevel = Random.Range(0, SceneManager.sceneCountInBuildSettings);
+            _currentLevel = Random.Range(0, SceneManager.sceneCountInBuildSettings - 1);
         }
-        StartLevel(0);
+        StartLevel(_currentLevel);
     }
 
     private void RestartLevel()
