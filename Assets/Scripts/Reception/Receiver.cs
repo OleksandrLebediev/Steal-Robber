@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Receiver : MonoBehaviour
+public class Receiver : MonoBehaviour
 {
     [Header("Receiver")]
     [SerializeField] private Transform _receptionPoint;
@@ -13,18 +13,11 @@ public abstract class Receiver : MonoBehaviour
 
     public event UnityAction<ISender> ObjectAccepted;
 
-    public virtual void Initialize(ObjectForCollectType objectForCollectType)
+    public virtual void Initialize(ObjectForCollectType objectForCollectType, AudioSource audioSource)
     {
         _objectForCollectType = objectForCollectType;
-    }
+        _receptionZone.Initialize(_objectForCollectType, _receptionPoint, audioSource);
 
-    public virtual void Start()
-    {
-        _receptionZone.Initialize(_objectForCollectType, _receptionPoint);
-    }
-
-    public virtual void OnEnable()
-    {
         _receptionZone.ObjectAccepted += OnObjectAccepted;
     }
 

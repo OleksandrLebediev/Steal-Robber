@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d52ff43ef67d3f4eb8a36612a498262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lossScreen: {fileID: 0}
+  _loseScreen: {fileID: 0}
   _winScreen: {fileID: 0}
-  _playerSpawner: {fileID: 0}
+  _transitionScreen: {fileID: 0}

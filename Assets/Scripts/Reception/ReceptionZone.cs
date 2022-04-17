@@ -5,9 +5,10 @@ using UnityEngine.Events;
 
 public class ReceptionZone : MonoBehaviour
 {
-    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _ñollectSound;
 
     private ObjectForCollectType _objectForCollectType;
+    private AudioSource _audioSource;
     private Transform _recipient;
 
     private readonly float _timeCollection = 0.7f;
@@ -15,16 +16,11 @@ public class ReceptionZone : MonoBehaviour
 
     public event UnityAction<ISender> ObjectAccepted;
 
-    public virtual void Awake()
-    {
-        _audioSource = GetComponent<AudioSource>();
-    }
-
-
-    public void Initialize(ObjectForCollectType objectForCollectType,  Transform recipient)
+    public void Initialize(ObjectForCollectType objectForCollectType,  Transform recipient, AudioSource audioSource)
     {
         _objectForCollectType = objectForCollectType;
         _recipient = recipient;
+        _audioSource = audioSource;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,7 +51,7 @@ public class ReceptionZone : MonoBehaviour
         float currentTime = 0;
         Vector3 target = _recipient.position;
         objectForCollect.CurrentTransform.SetParent(null);
-        _audioSource.Play();
+        _audioSource.PlayOneShot(_ñollectSound);
 
         AnimationCurve roadX = AnimationCurve.EaseInOut(0, objectForCollect.CurrentTransform.localPosition.x, _timeCollection, target.x);
         AnimationCurve roadY = AnimationCurve.EaseInOut(0, objectForCollect.CurrentTransform.localPosition.y, _timeCollection, target.y);

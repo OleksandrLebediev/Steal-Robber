@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class TransitionScreen : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class TransitionScreen : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
-        LeanTween.alpha(_imageTransition.rectTransform, 0, 1).setOnComplete(() => { gameObject.SetActive(false); });
+        _imageTransition.DOFade(0, 1).OnComplete(() => { gameObject.SetActive(false); });
     }
 
     public void Hide()

@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(MonetaryRewardDispenser))]
 [RequireComponent(typeof(AudioClip))]
 public abstract class Requester : MonoBehaviour
 {
-    [SerializeField] private Receiver _receiver;
     [SerializeField] private Request _request;
     [SerializeField] private RequestDisplay _requestDisplay;
-    [SerializeField] private int _monetaryReward;
+    [SerializeField] private Receiver _receiver;
 
     private AudioSource _audioSource;
     private MonetaryRewardDispenser _rewardDispenser;
@@ -20,16 +18,17 @@ public abstract class Requester : MonoBehaviour
     public bool IsCompleted { get; private set; }
 
     public event UnityAction RequestCompleted;
+    public event UnityAction AllMoneyPaid;
 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
-        _rewardDispenser = GetComponent<MonetaryRewardDispenser>();
+        _rewardDispenser = GetComponentInChildren<MonetaryRewardDispenser>();
     }
 
-    private void Start()
+    public void Initialize()
     {
-        _receiver.Initialize(_request.ObjectForCollectType);
+        _receiver.Initialize(_request.ObjectForCollectType, _audioSource);
         _requestDisplay.Initialize(_request.NumberOfTargets, _request.SpriteOfTarget);
         _rewardDispenser.Initialize(_audioSource);
         _numberOfRemainingTargets = _request.NumberOfTargets;
@@ -39,19 +38,21 @@ public abstract class Requester : MonoBehaviour
     {
         _receiver.ObjectAccepted += OnObjectAccepted;
         _rewardDispenser.MoneyMovedToTarget += OnMoneyMovedToTarget;
+        _rewardDispenser.AllMoneyHitTarget += OnAllMoneyHitTarget; 
     }
 
     private void OnDestroy()
     {
         _receiver.ObjectAccepted -= OnObjectAccepted;
         _rewardDispenser.MoneyMovedToTarget -= OnMoneyMovedToTarget;
+        _rewardDispenser.AllMoneyHitTarget -= OnAllMoneyHitTarget;
     }
 
     private void OnObjectAccepted(ISender sender)
     {
         if (_sender == null) _sender = sender;
         _numberOfRemainingTargets--;
-        _rewardDispenser.DispenseMonetaryRewardToTarget(_monetaryReward, transform.position, sender.CurrentTransform);
+        _rewardDispenser.DispenseMonetaryRewardToTarget(_request.Reward, transform.position, sender.CurrentTransform);
         _requestDisplay.UpdateAmountCollectObject(_numberOfRemainingTargets);
         CheckCompletionOfRequest();
     }
@@ -69,4 +70,10 @@ public abstract class Requester : MonoBehaviour
     {
         _sender.Accepting.AddMoney(1);
     }
+
+    private void OnAllMoneyHitTarget()
+    {
+        AllMoneyPaid?.Invoke();
+    }
+
 }

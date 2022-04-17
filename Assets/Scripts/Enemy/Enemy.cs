@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour, IObjectForCollect, IShooter
         Weapon = GetComponentInChildren<Weapon>();
     }
 
-    private void Start()
+    public void Initialize()
     {
         _stateMachine = new StateMachine();
         _stateMachine

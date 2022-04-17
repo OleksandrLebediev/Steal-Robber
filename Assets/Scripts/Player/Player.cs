@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerMovement))]
-public class Player : MonoBehaviour, ITarget, ISender
+public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
 {
     [SerializeField] private int _health;
     [SerializeField] private HealthBarDisplay _healthBarDisplay;
@@ -18,6 +19,9 @@ public class Player : MonoBehaviour, ITarget, ISender
     public Transform CurrentTransform => transform;
     public Vector3 VectorPosition => transform.position;
     public IAcceptingMoney Accepting  => _wallet;
+    public IBalanceInformant BalanceInformant => _wallet;
+
+    public event UnityAction Dead;
 
     private void Awake()
     {
@@ -28,7 +32,7 @@ public class Player : MonoBehaviour, ITarget, ISender
         Bag = GetComponentInChildren<Bag>();
     }
 
-    private void Start()
+    public void Initialize()
     {
         _stateMachine = new StateMachine();
         _stateMachine
@@ -50,7 +54,7 @@ public class Player : MonoBehaviour, ITarget, ISender
         if (_currentHealth <= 0)
         {
             IsDead = true;
-            GlobalEventManager.SendPlayerDead();
+            Dead?.Invoke();
         }
 
         _healthBarDisplay.Show();
