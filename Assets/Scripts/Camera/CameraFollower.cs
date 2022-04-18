@@ -20,7 +20,7 @@ public class CameraFollower : MonoBehaviour
         if (_target != null)
         {
            Vector3 target = new Vector3(_target.CurrentTransform.position.x, _startPosition.y, _startPosition.z + _target.CurrentTransform.position.z);
-            transform.position = Vector3.SmoothDamp(transform.position, target, ref _velocity, 0.01f, 40);
+            transform.position = target;
         }
     }
 }

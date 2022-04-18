@@ -6,6 +6,7 @@ public class LevelsSwitcher : MonoBehaviour, ILevelsInformant
 {
     private IUIAnswer _uIAnswer;
     private int _currentLevel;
+
     private readonly string levelSceneName = "Level_";
 
     public int CurrentLevel => _currentLevel;
@@ -35,7 +36,7 @@ public class LevelsSwitcher : MonoBehaviour, ILevelsInformant
     private void StartNextLevel()
     {
         _currentLevel++;
-        if (_currentLevel >= SceneManager.sceneCountInBuildSettings)
+        if (_currentLevel >= SceneManager.sceneCountInBuildSettings - 1)
         {
             _currentLevel = Random.Range(0, SceneManager.sceneCountInBuildSettings - 1);
         }
