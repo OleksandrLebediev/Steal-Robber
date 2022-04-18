@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 7579525495159458099}
   - component: {fileID: 7579525495159458098}
   - component: {fileID: 7579525495159458101}
-  - component: {fileID: 7579525495159458100}
+  - component: {fileID: 2059599863}
   - component: {fileID: 7579525495159458103}
   m_Layer: 5
   m_Name: Win Screen
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!114 &7579525495159458100
+--- !u!114 &2059599863
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
