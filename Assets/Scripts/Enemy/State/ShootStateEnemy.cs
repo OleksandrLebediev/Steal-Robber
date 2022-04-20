@@ -26,7 +26,7 @@ public class ShootStateEnemy : BaseState
     {
         _timeLastFired = 0;
         _mono.StartCoroutine(ShootCoroutine());
-        _mono.StartCoroutine(_movement.RotationCoroutine(_shooter.Target.CurrentTransform, true));
+        _mono.StartCoroutine(_movement.RotationCoroutine(_shooter.Target.CurrentTransform));
     }
 
     public override void Exit()

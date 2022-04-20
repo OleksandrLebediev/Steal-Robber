@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private Transform[] _pathTargetList;
+    [SerializeField] private PatroleType _patruleType;
     [SerializeField] private float _walkSpeed;
     [SerializeField] private float _runSpeed;
     [SerializeField] private float _rotateSpeed;
@@ -15,24 +16,25 @@ public class EnemyMovement : MonoBehaviour
     private CapsuleCollider _capsuleCollider;
     private int _currentPath;
 
+    public PatroleType Patrole => _patruleType;
+    public float WalkSpeed => _walkSpeed;
+    public float RunSpeed => _runSpeed;
+
+
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
-    public void Initialize(MovementType movementType = MovementType.Walk)
+    public void Initialize()
     {
-        switch (movementType)
-        {
-            case MovementType.Walk:
-                _agent.speed = _walkSpeed;
-                break;
-            case MovementType.Run:
-                _agent.speed = _runSpeed;
-                break;
-        }
-        
+        TrySetDefaultPath();
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _agent.speed = speed;
     }
 
     public void ResetAgentPaths()
@@ -60,7 +62,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public IEnumerator RotationCoroutine(Vector3 target, bool follow = false)
+    public IEnumerator RotationCoroutine(Vector3 target)
     {
         while (true)
         {
@@ -68,7 +70,6 @@ public class EnemyMovement : MonoBehaviour
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _rotateSpeed * Time.deltaTime);
-            if(follow == true) yield return null;
 
             if (Quaternion.Angle(transform.rotation, rotation) <= 0.001f)
             {
@@ -78,22 +79,28 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public IEnumerator RotationCoroutine(Transform target, bool follow = false)
+    public IEnumerator RotationCoroutine(Transform target, float speed = 10)
     {
         while (true)
         {
             Vector3 lookPos = target.position - transform.position;
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _rotateSpeed * Time.deltaTime);
-            if (follow == true) yield return null;
-
-            if (Quaternion.Angle(transform.rotation, rotation) <= 0.001f)
-            {
-                break;
-            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, speed * Time.deltaTime);
             yield return null;
         }
+    }
+
+    public IEnumerator RotationAround(Quaternion rotation)
+    {
+        while (true)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _rotateSpeed * Time.deltaTime);
+
+            if (Quaternion.Angle(transform.rotation, rotation) <= 0.001f) break;
+            yield return null;
+        }
+
     }
 
     public Vector3 GetPath()
@@ -117,11 +124,15 @@ public class EnemyMovement : MonoBehaviour
         _agent.enabled = false;
         _capsuleCollider.isTrigger = true;
     }
+
+    private void TrySetDefaultPath()
+    {
+        if (_pathTargetList == null || _pathTargetList.Length == 0)
+        {
+            _pathTargetList = new Transform[1];
+            _pathTargetList[0] = transform;
+        }
+    }
 }
 
-public enum MovementType
-{
-    Walk,
-    Run
-}
 

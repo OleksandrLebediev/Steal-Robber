@@ -25,10 +25,10 @@ public class WantedStateEnemy : BaseState
 
     public override void Enter()
     {
-        _movement.Initialize(MovementType.Run);
+        _movement.SetSpeed(_movement.RunSpeed);
         _animator.SetBool(EnemyAnimationInfo.Run, false);
         _target = _targeter.TargetPosition.VectorPosition;
-        _currentNumberOfSearches = _numberOfSearches;
+        _currentNumberOfSearches = 0;
         _mono.StartCoroutine(WantedCoroutine());
     }
 
@@ -42,20 +42,32 @@ public class WantedStateEnemy : BaseState
     {
         yield return new WaitForSeconds(_delayBeforeWanted);
 
-        while (_currentNumberOfSearches > 0)
+        while (_currentNumberOfSearches < _numberOfSearches)
         {
             _animator.SetBool(EnemyAnimationInfo.Run, true);
             yield return _mono.StartCoroutine(_movement.MoveToTargetCoroutine(_target, _maxTimeWay));
             _animator.SetBool(EnemyAnimationInfo.Run, false);
 
-            Vector3 randomDirection = _movement.GetRandomDirection();
-            yield return _mono.StartCoroutine(_movement.RotationCoroutine(randomDirection));
+            Vector3 direction = ChoosePath();
+            yield return _mono.StartCoroutine(_movement.RotationCoroutine(direction));
 
-            _target = randomDirection;
-            _currentNumberOfSearches--;
+            _target = direction;
+            _currentNumberOfSearches++;
 
             yield return null;
         }
-        _stateSwitcher.SwitchState<PatrolLoopStateEnemy>();
+        _stateSwitcher.SwitchState<ChoicePatrolStateEnemy>();
+    }
+
+    private Vector3 ChoosePath()
+    {
+        if(_currentNumberOfSearches == _numberOfSearches - 2)
+        {
+            return _movement.PathTargetList[0].position;
+        }
+        else
+        {
+            return _movement.GetRandomDirection();
+        }
     }
 }

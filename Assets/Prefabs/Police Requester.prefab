@@ -47,13 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57cb13793186421418447cfd4c1396cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _receiver: {fileID: 8611177362369076874}
   _request:
     _numberOfTargets: 2
+    _reward: 0
     _objectForCollectType: 0
     _spriteOfTarget: {fileID: -6288675531105480456, guid: 44731996109df5b4d98394e01294a9dc, type: 3}
   _requestDisplay: {fileID: 8611177361372647931}
-  _monetaryReward: 10
+  _receiver: {fileID: 8611177362369076874}
 --- !u!82 &8611177361681924229
 AudioSource:
   m_ObjectHideFlags: 0
@@ -281,26 +281,6 @@ PrefabInstance:
     - target: {fileID: 6237330373340429743, guid: 10ba8fb6899975b48b094988d0ce9c25, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237330373431874652, guid: 10ba8fb6899975b48b094988d0ce9c25, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9914449
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237330373431874652, guid: 10ba8fb6899975b48b094988d0ce9c25, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.13052616
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237330373431874652, guid: 10ba8fb6899975b48b094988d0ce9c25, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237330373431874652, guid: 10ba8fb6899975b48b094988d0ce9c25, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237330373431874652, guid: 10ba8fb6899975b48b094988d0ce9c25, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10ba8fb6899975b48b094988d0ce9c25, type: 3}

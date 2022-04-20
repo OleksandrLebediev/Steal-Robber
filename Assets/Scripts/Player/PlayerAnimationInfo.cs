@@ -5,4 +5,5 @@ using UnityEngine;
 public class PlayerAnimationInfo 
 {
     public const string Move = "move";
+    public const string Dying = "dying";
 }

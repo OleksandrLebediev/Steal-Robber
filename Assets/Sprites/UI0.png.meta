@@ -8,6 +8,15 @@ TextureImporter:
   - first:
       213: 9119848287009991591
     second: UI0_1
+  - first:
+      213: -3370932167944582780
+    second: UI0_2
+  - first:
+      213: 5670516700591834357
+    second: UI0_3
+  - first:
+      213: 6854199590123180751
+    second: UI0_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -113,8 +122,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 341
-        width: 335
+        y: 342
+        width: 334
         height: 139
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -134,9 +143,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 359
-        y: 337
+        y: 338
         width: 142
-        height: 143
+        height: 142
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,6 +155,69 @@ TextureImporter:
       bones: []
       spriteID: 7ab6fa0b2b5309e70800000000000000
       internalID: 9119848287009991591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI0_2
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 241
+        width: 59
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 489c9bf9d0b0831d0800000000000000
+      internalID: -3370932167944582780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI0_3
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 239
+        width: 264
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f442bf35e8b1be40800000000000000
+      internalID: 5670516700591834357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI0_4
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 175
+        width: 262
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc29bec46320f1f50800000000000000
+      internalID: 6854199590123180751
       vertices: []
       indices: 
       edges: []

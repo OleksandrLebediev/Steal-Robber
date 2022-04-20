@@ -36,14 +36,20 @@ public class Enemy : MonoBehaviour, IObjectForCollect, IShooter
     {
         _stateMachine = new StateMachine();
         _stateMachine
-            .AddState(new PatrolLoopStateEnemy(_stateMachine, _movement,_animator ,this))
+            .AddState(new ChoicePatrolStateEnemy(_stateMachine, _movement))
+            .AddState(new PatrolStandStateEnemy(_stateMachine, _animator))
+            .AddState(new PatrolTurnStateEnemy(_stateMachine, _animator, _movement, this))
+            .AddState(new PatrolLoopStateEnemy(_stateMachine, _movement, _animator, this))
             .AddState(new ShootStateEnemy(_stateMachine, _animator, _movement, this, this))
             .AddState(new CollectedStateEnemy(_stateMachine, _animator, _enemyVision))
-            .AddState(new WantedStateEnemy(_stateMachine, _movement ,_animator , this, this));
+            .AddState(new WantedStateEnemy(_stateMachine, _movement, _animator, this, this));
 
         _stateMachine.Initialize();
+        _movement.Initialize();
         Weapon.Initialize(_audioSource);
     }
+
+
 
     private void OnEnable()
     {

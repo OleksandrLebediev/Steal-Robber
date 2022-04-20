@@ -22,7 +22,7 @@ public class PatrolLoopStateEnemy : BaseState
         _animator.SetBool(EnemyAnimationInfo.Walk, false);
         if (_movement.PathTargetList.Length != 0)
         {
-            _movement.Initialize();
+            _movement.SetSpeed(_movement.WalkSpeed);
             _target = _movement.GetPath();
             _mono.StartCoroutine(PatrulLoopScenarioCoroutine());
         }
@@ -32,6 +32,7 @@ public class PatrolLoopStateEnemy : BaseState
     {
         _mono.StopAllCoroutines();
         _movement.ResetAgentPaths();
+        _animator.SetBool(EnemyAnimationInfo.Walk, false);
     }
 
     private IEnumerator PatrulLoopScenarioCoroutine()
@@ -52,10 +53,4 @@ public class PatrolLoopStateEnemy : BaseState
     }
 }
 
-public enum PatruleType
-{
-    Turn,
-    Stand,
-    Loop
-}
 
