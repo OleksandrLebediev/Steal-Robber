@@ -21,7 +21,8 @@ public class GameInitializer : MonoBehaviour
         _enemiesPlace.Initialize();
 
         UIInputData uIInputData = new UIInputData(_levelsSwitcher, _playerPlace.Player.Wallet);
-        _uIManager.Initialize(_requestsHandler, _playerPlace.Player, uIInputData);
+        _uIManager.Initialize(_requestsHandler, _playerPlace.Player, 
+            uIInputData, _playerPlace.Player.Wallet);
 
         _saveSystem = new BinarySaveSystem();
         SaveData data = _saveSystem.Load();

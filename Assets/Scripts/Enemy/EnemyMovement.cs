@@ -79,7 +79,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public IEnumerator RotationCoroutine(Transform target, float speed = 10)
+    public IEnumerator RotationFollowCoroutine(Transform target, float speed = 4)
     {
         while (true)
         {

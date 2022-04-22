@@ -16,6 +16,11 @@ public class WalletDisplay : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
+    public void Initializer(PlayerWallet playerWallet)
+    {
+        _playerWallet = playerWallet;
+    }
+
     private void OnEnable()
     {
         _playerWallet.AmountMoneyChanged += OnAmountMoneyChanged;

@@ -17,6 +17,7 @@ public class MonetaryRewardDispenser : MonoBehaviour
     private Vector3 _offsetMoveTarget = Vector3.up;
     private float _soundDelay = 0.02f;
     private float _timeLastSound;
+    private float _currentSpeed;
 
 
     public event UnityAction MoneyMovedToTarget;
@@ -29,6 +30,7 @@ public class MonetaryRewardDispenser : MonoBehaviour
 
     public void DispenseMonetaryRewardToTarget(int amountOfMoney, Vector3 startPosition, Transform targetPosition)
     {
+        _currentSpeed = _speed;
         for (int i = 0; i < amountOfMoney; i++)
         {
             Vector3 randomPosition = Random.insideUnitSphere * _radius + transform.position;

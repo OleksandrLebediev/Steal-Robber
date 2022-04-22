@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour, IUIAnswer
 {
+    [SerializeField] private MainMenu _mainMenu;
     [SerializeField] private LoseScreen _loseScreen;
     [SerializeField] private WinScreen _winScreen;
     [SerializeField] private TransitionScreen _transitionScreen;
@@ -15,13 +16,14 @@ public class UIManager : MonoBehaviour, IUIAnswer
     public event UnityAction PressedNextButton;
 
     public void Initialize(IRequestsReporter requestsReporter, 
-        IPlayerEvents playerEvents, UIInputData uIInputData)
+        IPlayerEvents playerEvents, UIInputData uIInputData, PlayerWallet playerWallet)
     {
         _requestsReporter = requestsReporter;
         _playerEvents = playerEvents;
         _uIInputData = uIInputData;
 
         _transitionScreen.Show();
+        _mainMenu.Initializer(playerWallet);
         _winScreen.Initialize();
         _loseScreen.Initialize();
 
