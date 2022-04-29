@@ -8,17 +8,15 @@ public class MonetaryRewardDispenser : MonoBehaviour
     [SerializeField] private Money _moneyTemplate;
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private float _speed = 4;
-
-    private List<Money> _moneyList = new List<Money>();
+    
     private AudioSource _audioSource;
-    private float _radius = 0.5f;
-    private float _offsetY = 1;
-    private float _delayMove = 1f;
-    private Vector3 _offsetMoveTarget = Vector3.up;
-    private float _soundDelay = 0.02f;
     private float _timeLastSound;
-    private float _currentSpeed;
-
+    private readonly float _soundDelay = 0.02f;
+    
+    private readonly float _radius = 0.5f;
+    private readonly float _offsetY = 1;
+    private readonly float _delayMove = 1f;
+    private readonly Vector3 _offsetMoveTarget = Vector3.up;
 
     public event UnityAction MoneyMovedToTarget;
     public event UnityAction AllMoneyHitTarget;
@@ -30,36 +28,38 @@ public class MonetaryRewardDispenser : MonoBehaviour
 
     public void DispenseMonetaryRewardToTarget(int amountOfMoney, Vector3 startPosition, Transform targetPosition)
     {
-        _currentSpeed = _speed;
+        List<Money> monies = new List<Money>();
+
         for (int i = 0; i < amountOfMoney; i++)
         {
             Vector3 randomPosition = Random.insideUnitSphere * _radius + transform.position;
             randomPosition.y = _offsetY;
             Money money = Instantiate(_moneyTemplate, randomPosition, Quaternion.identity);
-            _moneyList.Add(money);
+            monies.Add(money);
         }
 
-        StartCoroutine(MoveRewardToTargetCoroutine(targetPosition));
+        StartCoroutine(MoveRewardToTargetCoroutine(targetPosition, monies, _speed));
     }
 
-    private IEnumerator MoveRewardToTargetCoroutine(Transform target)
+    private IEnumerator MoveRewardToTargetCoroutine(Transform target, List<Money> monies, float speed)
     {
         yield return new WaitForSeconds(_delayMove);
          
-        while (_moneyList.Count != 0)
+        while (monies.Count != 0)
         {
-            for (int i = _moneyList.Count - 1; i >= 0; i--)
+            for (int i = monies.Count - 1; i >= 0; i--)
             {
-                Money money = _moneyList[i];
-                money.transform.position = Vector3.MoveTowards(money.transform.position, target.position + _offsetMoveTarget, _speed * Time.deltaTime);
-                _speed += Time.deltaTime;
+                Money money = monies[i];
+                money.transform.position = Vector3.MoveTowards(money.transform.position, 
+                    target.position + _offsetMoveTarget, speed * Time.deltaTime);
+                speed += Time.deltaTime;
                 money.DisablePhysics();
 
-                if (Vector3.Distance(_moneyList[i].transform.position, target.transform.position + _offsetMoveTarget) <= 0.01)
+                if (Vector3.Distance(monies[i].transform.position, target.transform.position + _offsetMoveTarget) <= 0.01)
                 {
                     Destroy(money.gameObject);
                     MoneyMovedToTarget?.Invoke();
-                    _moneyList.Remove(money);
+                    monies.Remove(money);
 
                     if ((_timeLastSound + _soundDelay) <= Time.time)
                     {
@@ -70,7 +70,7 @@ public class MonetaryRewardDispenser : MonoBehaviour
             }
             yield return null;
         }
-
+        monies.Clear(); 
         AllMoneyHitTarget?.Invoke();
     }
 }

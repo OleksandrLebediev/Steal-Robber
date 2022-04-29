@@ -22,6 +22,7 @@ public class WantedStateEnemy : BaseState
     private readonly float _delayBeforeWanted = 1f;
     private Vector3 _target;
     private int _currentNumberOfSearches;
+    private bool _isReturn => _currentNumberOfSearches == _numberOfSearches - 2;
 
     public override void Enter()
     {
@@ -61,9 +62,9 @@ public class WantedStateEnemy : BaseState
 
     private Vector3 ChoosePath()
     {
-        if(_currentNumberOfSearches == _numberOfSearches - 2)
+        if(_isReturn == true)
         {
-            return _movement.PathTargetList[0].position;
+            return _movement.GetPath();
         }
         else
         {

@@ -5,16 +5,17 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private Transform[] _pathTargetList;
+    [SerializeField] private LoopPoint[] _pathTargetList;
     [SerializeField] private PatroleType _patruleType;
     [SerializeField] private float _walkSpeed;
     [SerializeField] private float _runSpeed;
     [SerializeField] private float _rotateSpeed;
-    public Transform[] PathTargetList => _pathTargetList;
+    public LoopPoint[] PathTargetList => _pathTargetList;
 
     private NavMeshAgent _agent;
     private CapsuleCollider _capsuleCollider;
     private int _currentPath;
+    private Vector3 _startPosition;
 
     public PatroleType Patrole => _patruleType;
     public float WalkSpeed => _walkSpeed;
@@ -29,7 +30,8 @@ public class EnemyMovement : MonoBehaviour
 
     public void Initialize()
     {
-        TrySetDefaultPath();
+        _startPosition = transform.position;
+        //TrySetDefaultPath();
     }
 
     public void SetSpeed(float speed)
@@ -105,7 +107,10 @@ public class EnemyMovement : MonoBehaviour
 
     public Vector3 GetPath()
     {
-        Vector3 path = PathTargetList[_currentPath].position;
+        if (_pathTargetList == null || _pathTargetList.Length == 0)
+            return _startPosition;
+        
+        Vector3 path = PathTargetList[_currentPath].Position;
         _currentPath += 1;
         _currentPath = _currentPath % PathTargetList.Length;
         return path;
@@ -129,8 +134,8 @@ public class EnemyMovement : MonoBehaviour
     {
         if (_pathTargetList == null || _pathTargetList.Length == 0)
         {
-            _pathTargetList = new Transform[1];
-            _pathTargetList[0] = transform;
+            _pathTargetList = new LoopPoint[1];
+            //_pathTargetList[0].SetPosition(transform.position); 
         }
     }
 }

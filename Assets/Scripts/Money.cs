@@ -6,7 +6,7 @@ public class Money : MonoBehaviour
 {
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
-
+    
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>(); 

@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf58465ea1032324684eade65b50c6b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 10
+  _health: 100
   _healthBarDisplay: {fileID: 9123563945389214303}
 --- !u!114 &9123563944966598175
 MonoBehaviour:
@@ -2006,7 +2006,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6854199590123180751, guid: 7fb28c514616ec44abd251504a8a8a7c, type: 3}
+  m_Sprite: {fileID: -263849798036621205, guid: 7fb28c514616ec44abd251504a8a8a7c, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1

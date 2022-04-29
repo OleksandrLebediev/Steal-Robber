@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1825167340709908387}
   - component: {fileID: 4089201773514789805}
   - component: {fileID: 7681563111123415480}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,8 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bd174c66f4ef6c49a93c4cbfee734fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 7681563111123415480}
-  _audioClip: {fileID: 8300000, guid: bd834b1d8dcb8944b9a488c80ddef057, type: 3}
 --- !u!65 &1825167340709908387
 BoxCollider:
   m_ObjectHideFlags: 0
