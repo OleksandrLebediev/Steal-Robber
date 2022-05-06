@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +10,11 @@ public class RequestsHandler : MonoBehaviour, IRequestsReporter
     private int _amountOfMoneyPaidRequests;
 
     public event UnityAction AllRequestsCompleted;
+
+    private void Awake()
+    {
+        _requesters = GetComponentsInChildren<Requester>();
+    }
 
     private void OnDisable()
     {

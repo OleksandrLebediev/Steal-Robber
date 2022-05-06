@@ -23,6 +23,7 @@ public class PatrolTurnStateEnemy : BaseState
     public override void Exit()
     {
         _mono.StopAllCoroutines();
+        _animator.SetBool(EnemyAnimationInfo.Turn, false);
     }
 
     private IEnumerator PatrulTurnScenarioCoroutine()

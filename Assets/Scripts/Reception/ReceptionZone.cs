@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class ReceptionZone : MonoBehaviour
 {
-    [SerializeField] private AudioClip _сollectSound;
+    [SerializeField] private AudioClip _collectSound;
 
     private ObjectForCollectType _objectForCollectType;
     private AudioSource _audioSource;
@@ -39,7 +39,8 @@ public class ReceptionZone : MonoBehaviour
 
         for (int i = 0; i < amountObjects; i++)
         {
-            IObjectForCollect objectForCollect = sender.Bag.GetCollectObject();
+            IObjectForCollect objectForCollect = sender.Bag.TryGetCollectObject();
+            if (objectForCollect == null) yield break;
             if (objectForCollect.Type != _objectForCollectType) yield break;
             StartCoroutine(CollectObjectAnimation(objectForCollect, sender));
             yield return new WaitForSeconds(_delayReceipt);
@@ -51,15 +52,17 @@ public class ReceptionZone : MonoBehaviour
         float currentTime = 0;
         Vector3 target = _recipient.position;
         objectForCollect.CurrentTransform.SetParent(null);
-        _audioSource.PlayOneShot(_сollectSound);
-
-        AnimationCurve roadX = AnimationCurve.EaseInOut(0, objectForCollect.CurrentTransform.localPosition.x, _timeCollection, target.x);
-        AnimationCurve roadY = AnimationCurve.EaseInOut(0, objectForCollect.CurrentTransform.localPosition.y, _timeCollection, target.y);
+        _audioSource.PlayOneShot(_collectSound);
+        sender.Bag.RemoveCollectObject(objectForCollect);
+        
+        var localPosition = objectForCollect.CurrentTransform.localPosition;
+        AnimationCurve roadX = AnimationCurve.EaseInOut(0, localPosition.x, _timeCollection, target.x);
+        AnimationCurve roadY = AnimationCurve.EaseInOut(0, localPosition.y, _timeCollection, target.y);
 
         roadY.AddKey(_timeCollection / 4, 1.5f);
         roadY.AddKey((_timeCollection / 4) * 2, 1.5f);
 
-        AnimationCurve roadZ = AnimationCurve.EaseInOut(0, objectForCollect.CurrentTransform.localPosition.z, _timeCollection, target.z);
+        AnimationCurve roadZ = AnimationCurve.EaseInOut(0, localPosition.z, _timeCollection, target.z);
 
         for (currentTime = 0; currentTime <= _timeCollection; currentTime += Time.deltaTime)
         {
@@ -67,7 +70,7 @@ public class ReceptionZone : MonoBehaviour
             yield return null;
         }
 
-        objectForCollect.CurrentTransform.localPosition = new Vector3(target.x, target.y, target.z);                                                                                                                       // itemForCollect.CurrentTransform.localRotation = Quaternion.AngleAxis(30, Vector3.up); // Установка кончных реультатов для поворота
+        objectForCollect.CurrentTransform.localPosition = new Vector3(target.x, target.y, target.z);                                                                                                                       // itemForCollect.CurrentTransform.localRotation = Quaternion.AngleAxis(30, Vector3.up); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         objectForCollect.CurrentTransform.localScale = new Vector3(1, 1, 1);
         objectForCollect.Remove();
         ObjectAccepted?.Invoke(sender);

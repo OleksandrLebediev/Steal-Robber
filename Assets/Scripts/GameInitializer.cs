@@ -8,6 +8,7 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private EnemiesProvider _enemiesProvider;
     [SerializeField] private PlayerProvider _playerProvider;
     [SerializeField] private CameraFollower _cameraFollower;
+    [SerializeField] private HostageProvider _hostageProvider;
     
     private BinarySaveSystem _saveSystem;
     
@@ -17,6 +18,9 @@ public class GameInitializer : MonoBehaviour
         _cameraFollower.Initialize(_playerProvider.Player);
         _requestsHandler.Initialize();
         _enemiesProvider.Initialize();
+
+        if (_hostageProvider != null)
+            _hostageProvider.Initialize();
 
         UIInputData uIInputData = new UIInputData(_levelsSwitcher, _playerProvider.Player.Wallet);
         _uIManager.Initialize(_requestsHandler, _playerProvider.Player, 

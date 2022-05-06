@@ -18,6 +18,11 @@ public class HealthBarDisplay : MonoBehaviour
             StopCoroutine(_waitHideCoroutine);
         _waitHideCoroutine = StartCoroutine(WaitHideCoroutine());     
     }
+    
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
 
     public void UpdateUIBar(float currentHealth)
     {

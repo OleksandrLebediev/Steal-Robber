@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
 {
     [SerializeField] private int _health;
-    [SerializeField] private HealthBarDisplay _healthBarDisplay;
+    [SerializeField] private PlayerDisplay _display;
 
     private StateMachine _stateMachine;
     private PlayerMovement _movement;
@@ -44,15 +44,23 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
             .AddState(new DiedStatePlayer(_stateMachine, _animator));
 
         _stateMachine.Initialize();
+        _display.Initialize(Bag.Capacity);
         _animatorOverrider.Initialize(_animator, Bag);
         _currentHealth = _health;
+        Bag.Changed += OnBagChanged;
     }
-
+    
     private void Update()
     {
         _stateMachine.CurrentState.UpdateLogic();
     }
-
+    
+    private void OnBagChanged(int amount)
+    {
+        _display.UpdateBag(amount);
+        _display.ShowBagCapacity();
+    }
+    
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
@@ -62,9 +70,9 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
             _stateMachine.SwitchState<DiedStatePlayer>();            
         }
 
-        _healthBarDisplay.Show();
+        _display.ShowHealth();
         float _healthFill = (float)_currentHealth / (float)_health;
-        _healthBarDisplay.UpdateUIBar(_healthFill);
+        _display.UpdateHealth(_healthFill);
     }
 
     private void OnPlayerDead()

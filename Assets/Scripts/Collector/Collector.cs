@@ -29,7 +29,7 @@ public class Collector : MonoBehaviour
 
     private void TryCollect(IObjectForCollect itemForCollect)
     {
-        if (itemForCollect.IsCollected == true) return;
+        if (itemForCollect.IsCollected == true || _bag.isFull == true ) return;
         StartCoroutine(CollectObjectAnimation(itemForCollect));
     }
 
@@ -42,14 +42,15 @@ public class Collector : MonoBehaviour
         itemForCollect.SetStateCollected();
         _bag.AddObject(itemForCollect);
 
-        AnimationCurve roadX = AnimationCurve.EaseInOut(0, itemForCollect.CurrentTransform.localPosition.x, _timeCollection, target.x + AnimationOfssetXPosition);
-        AnimationCurve roadY = AnimationCurve.EaseInOut(0, itemForCollect.CurrentTransform.localPosition.y, _timeCollection, target.y);
-        AnimationCurve roadYRotation = AnimationCurve.EaseInOut(0, itemForCollect.CurrentTransform.localPosition.y, _timeCollection, AnimationOfssetYRotation);
+        var localPosition = itemForCollect.CurrentTransform.localPosition;
+        AnimationCurve roadX = AnimationCurve.EaseInOut(0, localPosition.x, _timeCollection, target.x + AnimationOfssetXPosition);
+        AnimationCurve roadY = AnimationCurve.EaseInOut(0, localPosition.y, _timeCollection, target.y);
+        AnimationCurve roadYRotation = AnimationCurve.EaseInOut(0, localPosition.y, _timeCollection, AnimationOfssetYRotation);
 
         roadY.AddKey(_timeCollection / 4, 1.5f);
         roadY.AddKey((_timeCollection / 4) * 2, 1.5f);
 
-        AnimationCurve roadZ = AnimationCurve.EaseInOut(0, itemForCollect.CurrentTransform.localPosition.z, _timeCollection, target.z);
+        AnimationCurve roadZ = AnimationCurve.EaseInOut(0, localPosition.z, _timeCollection, target.z);
 
         for (currentTime = 0; currentTime <= _timeCollection; currentTime += Time.deltaTime)
         {

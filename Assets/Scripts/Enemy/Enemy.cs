@@ -14,13 +14,13 @@ public class Enemy : MonoBehaviour, IObjectForCollect, IShooter
     private Animator _animator;
     private bool _isCollected;
     private ITarget _target;
-    private IPosition _targePosition;
+    private IPosition _targetPosition;
 
     public ObjectForCollectType Type => ObjectForCollectType.Enemy;
     public Transform CurrentTransform => transform;
     public Weapon Weapon { get; private set; }
     public ITarget Target => _target;
-    public IPosition TargetPosition => _targePosition;
+    public IPosition TargetPosition => _targetPosition;
     public bool IsCollected => _isCollected;
 
     private void Awake()
@@ -48,9 +48,7 @@ public class Enemy : MonoBehaviour, IObjectForCollect, IShooter
         _movement.Initialize();
         Weapon.Initialize(_audioSource);
     }
-
-
-
+    
     private void OnEnable()
     {
         _enemyVision.PlayerDetected += OnDetectedPlayer;
@@ -76,7 +74,7 @@ public class Enemy : MonoBehaviour, IObjectForCollect, IShooter
     private void OnDetectedPlayer(ITarget newTarget)
     {
         _target = newTarget;
-        _targePosition = newTarget;
+        _targetPosition = newTarget;
         _stateMachine.SwitchState<ShootStateEnemy>();    
     }
 

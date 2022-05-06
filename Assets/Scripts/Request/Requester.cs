@@ -12,9 +12,10 @@ public abstract class Requester : MonoBehaviour
     private MonetaryRewardDispenser _rewardDispenser;
     private ISender _sender;
     private int _numberOfRemainingTargets;
+    private int _amountMoneyHitTarget;
+    
 
     public bool IsCompleted { get; private set; }
-
     public event UnityAction RequestCompleted;
     public event UnityAction AllMoneyPaid;
 
@@ -72,6 +73,8 @@ public abstract class Requester : MonoBehaviour
 
     private void OnAllMoneyHitTarget()
     {
-        AllMoneyPaid?.Invoke();
+        _amountMoneyHitTarget++;
+        if (_amountMoneyHitTarget == _request.NumberOfTargets)
+            AllMoneyPaid?.Invoke();
     }
 }

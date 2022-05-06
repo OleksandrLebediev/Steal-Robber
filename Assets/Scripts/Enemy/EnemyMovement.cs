@@ -129,15 +129,6 @@ public class EnemyMovement : MonoBehaviour
         _agent.enabled = false;
         _capsuleCollider.isTrigger = true;
     }
-
-    private void TrySetDefaultPath()
-    {
-        if (_pathTargetList == null || _pathTargetList.Length == 0)
-        {
-            _pathTargetList = new LoopPoint[1];
-            //_pathTargetList[0].SetPosition(transform.position); 
-        }
-    }
 }
 
 
