@@ -109,10 +109,10 @@ TextureImporter:
       name: FacesOfEnemies0_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 362
-        width: 119
-        height: 118
+        x: 34
+        y: 352
+        width: 129
+        height: 125
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
