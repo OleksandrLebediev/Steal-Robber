@@ -33,10 +33,10 @@ public class LoseScreen : MonoBehaviour
         _restartButton.Unsubscribe(OnPressedRestartButton);
     }
 
-    public void Show(int number—urrentLevel, int amountMoneyPerLevel)
+    public void Show(int numberCurrentLevel, int amountMoneyPerLevel)
     {
         gameObject.SetActive(true);
-        StartCoroutine(ShowScenarioCoroutine(number—urrentLevel, amountMoneyPerLevel));
+        StartCoroutine(ShowScenarioCoroutine(numberCurrentLevel, amountMoneyPerLevel));
     }
 
     public void Hide()
@@ -54,7 +54,7 @@ public class LoseScreen : MonoBehaviour
         yield return new WaitForSeconds(_delayBetweenShowed);
         _levelFailedTitle.Show(numberCompletedLevel);
 
-        yield return new WaitForSeconds(_delayBetweenShowed);
+        yield return new WaitForSeconds(_delayBetweenShowed * 2);
         yield return StartCoroutine(_rewardDisplay.ShowCoroutine(amountMoneyPerLevel));
 
         _restartButton.Show();

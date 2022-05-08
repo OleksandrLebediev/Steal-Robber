@@ -22,7 +22,6 @@ public class BinarySaveSystem : ISaveSystem
     public SaveData Load()
     {
         SaveData saveData;
-        Debug.Log(_filePath);
         if (File.Exists(_filePath) == false)
             return new SaveData(0, 0);
 

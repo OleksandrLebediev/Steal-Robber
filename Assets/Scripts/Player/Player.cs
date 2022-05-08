@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,7 +23,6 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
     public Vector3 VectorPosition => transform.position;
     public IAcceptingMoney Accepting => _wallet;
     public PlayerWallet Wallet => _wallet;
-
     public event UnityAction Dead;
 
     private void Awake()
@@ -47,20 +47,19 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
         _display.Initialize(Bag.Capacity);
         _animatorOverrider.Initialize(_animator, Bag);
         _currentHealth = _health;
-        Bag.Changed += OnBagChanged;
+        Subscribe();
     }
     
     private void Update()
     {
         _stateMachine.CurrentState.UpdateLogic();
     }
-    
-    private void OnBagChanged(int amount)
+
+    private void OnDestroy()
     {
-        _display.UpdateBag(amount);
-        _display.ShowBagCapacity();
+        Unsubscribe();
     }
-    
+
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
@@ -80,5 +79,28 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
         IsDead = true;
         _collector.Deactivate();
         Dead?.Invoke();
+    }
+    
+    private void OnBagChanged(int amount)
+    {
+        _display.UpdateBag(amount);
+        _display.ShowBagCapacity();
+    }
+    
+    private void OnBagFull()
+    {
+        _display.ShowBagFullNotice();
+    }
+    
+    private void Subscribe()
+    {
+        Bag.Changed += OnBagChanged;
+        Bag.Full += OnBagFull;
+    }
+
+    private void Unsubscribe()
+    {
+        Bag.Changed -= OnBagChanged;
+        Bag.Full -= OnBagFull;
     }
 }

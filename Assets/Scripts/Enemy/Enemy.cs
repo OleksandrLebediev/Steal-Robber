@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour, IObjectForCollect, IShooter
 {
     private StateMachine _stateMachine;
     private EnemyVision _enemyVision;
-    private AudioSource _audioSource;
+    private EnemiesAudioSourse _enemiesAudioSourse;
     private EnemyMovement _movement;
     private Animator _animator;
     private bool _isCollected;
@@ -27,12 +27,11 @@ public class Enemy : MonoBehaviour, IObjectForCollect, IShooter
     {
         _animator = GetComponent<Animator>();
         _enemyVision = GetComponent<EnemyVision>();
-        _audioSource = GetComponent<AudioSource>();
         _movement = GetComponent<EnemyMovement>();
         Weapon = GetComponentInChildren<Weapon>();
     }
 
-    public void Initialize()
+    public void Initialize(EnemiesAudioSourse enemiesAudioSourse)
     {
         _stateMachine = new StateMachine();
         _stateMachine
@@ -44,9 +43,10 @@ public class Enemy : MonoBehaviour, IObjectForCollect, IShooter
             .AddState(new CollectedStateEnemy(_stateMachine, _animator, _enemyVision))
             .AddState(new WantedStateEnemy(_stateMachine, _movement, _animator, this, this));
 
+        _enemiesAudioSourse = enemiesAudioSourse;
         _stateMachine.Initialize();
         _movement.Initialize();
-        Weapon.Initialize(_audioSource);
+        Weapon.Initialize(_enemiesAudioSourse);
     }
     
     private void OnEnable()
@@ -82,7 +82,7 @@ public class Enemy : MonoBehaviour, IObjectForCollect, IShooter
     {
         _isCollected = true;
         _movement.DestroyAgent();
-        _audioSource.Play();
+        _enemiesAudioSourse.PlayCollectedAudio();
         _stateMachine.SwitchState<CollectedStateEnemy>();
     }
 

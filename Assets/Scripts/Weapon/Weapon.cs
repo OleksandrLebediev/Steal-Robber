@@ -10,17 +10,17 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Bullet _bullet;
     [SerializeField] private AudioClip _gunShotClip;
    
-    private AudioSource _source;
+    private EnemiesAudioSourse _source;
 
-    public void Initialize(AudioSource _audioSource)
+    public void Initialize(EnemiesAudioSourse enemiesAudioSourse)
     {
-        _source = _audioSource;
+        _source = enemiesAudioSourse;
     }
 
     public void Fire(ITarget target)
     {
         var flash = Instantiate(_muzzlePrefab, _muzzlePosition.transform);
-        _source.PlayOneShot(_gunShotClip);
+        _source.PlayShootAudio(_gunShotClip);
         target.TakeDamage(_damage);
     }
 }

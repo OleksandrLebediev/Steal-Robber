@@ -14,12 +14,13 @@ public class PatrolLoopStateEnemy : BaseState
     private MonoBehaviour _mono;
     private EnemyMovement _movement;
     private Animator _animator;
-    private WaitForSeconds _waitForSeconds = new WaitForSeconds(2);
+    private WaitForSeconds _waitForSeconds;
     private Vector3 _target;
 
     public override void Enter()
     {
         _animator.SetBool(EnemyAnimationInfo.Walk, false);
+        _waitForSeconds = new WaitForSeconds(_movement.DelayLoop);
         if (_movement.PathTargetList.Length != 0)
         {
             _movement.SetSpeed(_movement.WalkSpeed);

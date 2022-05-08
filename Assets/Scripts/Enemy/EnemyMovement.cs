@@ -5,19 +5,29 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private LoopPoint[] _pathTargetList;
+    [Header("Type")]
     [SerializeField] private PatroleType _patruleType;
+    [Header("Target Points")]
+    [SerializeField] private LoopPoint[] _pathTargetList;
+    [Header("Speed")]
     [SerializeField] private float _walkSpeed;
     [SerializeField] private float _runSpeed;
     [SerializeField] private float _rotateSpeed;
+    [Header("Delay")]
+    [SerializeField] private float _delayLoop;
+    [SerializeField] private float _delayTurn;
+    
+    public PatroleType Patrole => _patruleType;
     public LoopPoint[] PathTargetList => _pathTargetList;
-
+    public float DelayLoop => _delayLoop;
+    public float DelayTurn => _delayTurn;
+    
+    
+    private int _currentPath;
     private NavMeshAgent _agent;
     private CapsuleCollider _capsuleCollider;
-    private int _currentPath;
     private Vector3 _startPosition;
 
-    public PatroleType Patrole => _patruleType;
     public float WalkSpeed => _walkSpeed;
     public float RunSpeed => _runSpeed;
 
@@ -31,7 +41,6 @@ public class EnemyMovement : MonoBehaviour
     public void Initialize()
     {
         _startPosition = transform.position;
-        //TrySetDefaultPath();
     }
 
     public void SetSpeed(float speed)

@@ -33,4 +33,10 @@ public class PlayerDisplay : MonoBehaviour
     {
         _capacityBagDisplay.UpdateAmount(amount);
     }
+
+    public void ShowBagFullNotice()
+    {
+        _capacityBagDisplay.ShowFullNotice();
+        ShowBagCapacity();
+    }
 }

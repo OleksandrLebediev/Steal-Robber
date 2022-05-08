@@ -14,11 +14,18 @@ public class Bag : MonoBehaviour
     public int AmountObjects => _objects.Count;
     public int Capacity => _capacity;
     public bool isEmpty => _objects.Count == 0;
-    public bool isFull => AmountObjects >= Capacity;
+    public bool isFull
+    {
+        get {
+            if(AmountObjects >= Capacity) Full?.Invoke();
+            return AmountObjects >= Capacity;
+        }
+    }
     public event UnityAction<int> ObjectsAmountChanged;
     public event UnityAction Desolated;
     public event UnityAction Filled;
-    public event UnityAction<int> Changed; 
+    public event UnityAction<int> Changed;
+    public event UnityAction Full; 
 
     public void AddObject(IObjectForCollect part)
     {

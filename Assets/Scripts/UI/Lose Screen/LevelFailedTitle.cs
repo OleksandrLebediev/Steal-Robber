@@ -6,14 +6,10 @@ namespace LoseScreenElement
 {
     public class LevelFailedTitle : MonoBehaviour
     {
-        private TMP_Text _title;
+        [SerializeField] private TMP_Text _titleLevel;
+        [SerializeField] private TMP_Text _titleFailed;
         private float _durationShowAnimation;
-
-        private void Awake()
-        {
-            _title = GetComponent<TMP_Text>();
-        }
-
+        
         public void Initialize(float durationShowAnimation)
         {
             _durationShowAnimation = durationShowAnimation;
@@ -23,7 +19,8 @@ namespace LoseScreenElement
         {
             gameObject.SetActive(true);
             ShowAnimations();
-            _title.text = $"level {numberfailedLevel}\nfailed";
+            _titleLevel.text = $"level {numberfailedLevel}";
+            _titleFailed.text = "Failed";
         }
 
         public void Hide()
@@ -33,8 +30,11 @@ namespace LoseScreenElement
 
         private void ShowAnimations()
         {
-            transform.localScale = Vector3.zero;
-            transform.DOScale(1, _durationShowAnimation).SetEase(Ease.OutBack);
+            _titleLevel.transform.localScale = Vector3.zero;
+            _titleFailed.transform.localScale = Vector3.zero;
+            _titleLevel.transform.DOScale(1, _durationShowAnimation).SetEase(Ease.OutBack).OnComplete(
+                () => { _titleFailed.transform.DOScale(1, _durationShowAnimation).SetEase(Ease.OutBack); }
+            );
         }
     }
 }

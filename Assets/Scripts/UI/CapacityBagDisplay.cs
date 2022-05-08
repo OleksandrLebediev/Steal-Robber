@@ -29,12 +29,19 @@ public class CapacityBagDisplay : MonoBehaviour
     public void UpdateAmount(int amount)
     {
         _capacity.text = $"{amount}/{_currentCapacity}";
+        _capacity.color = Color.white;
     }
 
     public void SetCapacity(int capacity)
     {
         _capacity.text = $"0/{capacity}";
         _currentCapacity = capacity;
+    }
+
+    public void ShowFullNotice()
+    {
+        _capacity.text = "FULL!";
+        _capacity.color = Color.red;
     }
     
     private IEnumerator WaitHideCoroutine()
