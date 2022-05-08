@@ -4809,10 +4809,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lose Screen
       objectReference: {fileID: 0}
-    - target: {fileID: 7424138792682087493, guid: 63ad2b2e0a03bc944a00237d7fec7b46, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63ad2b2e0a03bc944a00237d7fec7b46, type: 3}
 --- !u!1001 &7579525494977521934
@@ -4909,6 +4905,10 @@ PrefabInstance:
     - target: {fileID: 7579525495159458102, guid: 79cc70de91ae21f4c9128fd55bcf6187, type: 3}
       propertyPath: m_Name
       value: Win Screen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579525495159458102, guid: 79cc70de91ae21f4c9128fd55bcf6187, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79cc70de91ae21f4c9128fd55bcf6187, type: 3}
