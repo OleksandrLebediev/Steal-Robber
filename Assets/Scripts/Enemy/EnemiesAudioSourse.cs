@@ -19,8 +19,10 @@ public class EnemiesAudioSourse : MonoBehaviour
         _audioSource.PlayOneShot(_audioCollected);
     }
 
-    public void PlayShootAudio(AudioClip clip)
+    public void PlayShootAudio(AudioClip clip, float pitch)
     {
+        _audioSource.pitch = pitch;
         _audioSource.PlayOneShot(clip);
+        _audioSource.pitch = 1;
     }
 }

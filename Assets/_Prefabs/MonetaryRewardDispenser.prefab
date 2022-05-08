@@ -43,5 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 272b26201021a03459e68a862e201860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moneyTemplate: {fileID: 7159050908370180055, guid: 51dcc9b186f2e4f4a89989af52a8bc94, type: 3}
+  _moneyTemplate: {fileID: 4528476394669282782, guid: 51dcc9b186f2e4f4a89989af52a8bc94, type: 3}
   _audioClip: {fileID: 8300000, guid: bd834b1d8dcb8944b9a488c80ddef057, type: 3}
+  _speed: 4
