@@ -10,8 +10,8 @@ public class PlayerProvider : MonoBehaviour
         _player = GetComponentInChildren<Player>();
     }
 
-    public void Initialize()
+    public void Initialize(Joystick joystick)
     {
-        _player.Initialize();
+        _player.Initialize(joystick);
     }
 }

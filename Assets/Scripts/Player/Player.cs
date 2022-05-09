@@ -16,7 +16,7 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
     private PlayerAnimatorOverrider _animatorOverrider;
     private Animator _animator;
     private int _currentHealth;
-
+    
     public Bag Bag { get; private set; }
     public bool IsDead { get; private set; }
     public Transform CurrentTransform => transform;
@@ -35,12 +35,12 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
         Bag = GetComponentInChildren<Bag>();
     }
 
-    public void Initialize()
+    public void Initialize(Joystick joystick)
     {
         _stateMachine = new StateMachine();
         _stateMachine
-            .AddState(new IdelStatePlayer(_stateMachine))
-            .AddState(new MoveStatePlayer(_stateMachine, _movement, _animator))
+            .AddState(new IdelStatePlayer(_stateMachine, joystick))
+            .AddState(new MoveStatePlayer(_stateMachine, _movement, _animator, joystick))
             .AddState(new DiedStatePlayer(_stateMachine, _animator));
 
         _stateMachine.Initialize();

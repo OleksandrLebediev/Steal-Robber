@@ -9,12 +9,13 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private PlayerProvider _playerProvider;
     [SerializeField] private CameraFollower _cameraFollower;
     [SerializeField] private HostageProvider _hostageProvider;
+    [SerializeField] private Joystick _joystick;
     
     private BinarySaveSystem _saveSystem;
     
     private void Start()
     {
-        _playerProvider.Initialize();
+        _playerProvider.Initialize(_joystick);
         _cameraFollower.Initialize(_playerProvider.Player);
         _requestsHandler.Initialize();
         _enemiesProvider.Initialize();

@@ -2,14 +2,17 @@
 
 public class MoveStatePlayer : BaseState
 {
-    public MoveStatePlayer(IStationStateSwitcher stateSwitcher, PlayerMovement movement, Animator animator) : base(stateSwitcher)
+    public MoveStatePlayer(IStationStateSwitcher stateSwitcher, PlayerMovement movement, 
+        Animator animator, Joystick joystick) : base(stateSwitcher)
     {
         _movement = movement;
         _animator = animator;
+        _joystick = joystick;
     }
 
-    private PlayerMovement _movement;
-    private Animator _animator;
+    private readonly PlayerMovement _movement;
+    private readonly Animator _animator;
+    private Joystick _joystick;
 
     public override void Enter()
     {
@@ -23,7 +26,7 @@ public class MoveStatePlayer : BaseState
 
     public override void UpdateLogic()
     {
-        Vector3 direction = JoystickInput.Instance.MovementInput;
+        Vector3 direction = _joystick.MovementInput;
 
         _movement.Move(direction);
 
