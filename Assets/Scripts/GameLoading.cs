@@ -7,12 +7,14 @@ public class GameLoading : MonoBehaviour
 {
     [SerializeField] private Image _loadSlider;
     private BinarySaveSystem _saveSystem;
+    private readonly string levelSceneName = "Level_";
 
     private void Start()
     {
         _saveSystem = new BinarySaveSystem();
         SaveData saveData = _saveSystem.Load();
-        string level = "Level_" + saveData.Level;
+        string level = levelSceneName + saveData.Level;
+        //TinySauce.OnGameStarted(level);
         StartCoroutine(LoadAsync(level));
     }
 

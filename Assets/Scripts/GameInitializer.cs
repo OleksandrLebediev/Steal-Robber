@@ -31,18 +31,36 @@ public class GameInitializer : MonoBehaviour
         SaveData data = _saveSystem.Load();
         _levelsSwitcher.Initialize(_uIManager, data.Level);
         _playerProvider.Player.Wallet.Initialize(data.Money);
+        
         _levelsSwitcher.LevelChanges += OnLevelChanges;
+        _levelsSwitcher.LevelRestarted += OnLevelRestarted;
+        _levelsSwitcher.LevelStart += OnLevelStart;
+    }
+
+    private void OnLevelStart()
+    {
+       // TinySauce.OnGameStarted("level_" + _levelsSwitcher.CurrentLevel);
+        SaveData data = new SaveData(_levelsSwitcher.CurrentLevel, _playerProvider.Player.Wallet.AmountMoney);
+        _saveSystem.Save(data);
+    }
+
+    private void OnLevelRestarted()
+    {
+      //  TinySauce.OnGameFinished(false, _playerProvider.Player.Wallet.AmountMoneyPerLevel,
+       //     "level_" + _levelsSwitcher.CurrentLevel);
     }
 
     private void OnLevelChanges()
     {
-        SaveData data = new SaveData(_levelsSwitcher.CurrentLevel, _playerProvider.Player.Wallet.AmountMoney);
-        _saveSystem.Save(data);
+      //  TinySauce.OnGameFinished(true, _playerProvider.Player.Wallet.AmountMoneyPerLevel,
+       //     "level_" + _levelsSwitcher.CurrentLevel);
     }
 
     private void OnDestroy()
     {
         _levelsSwitcher.LevelChanges -= OnLevelChanges;
+        _levelsSwitcher.LevelRestarted -= OnLevelRestarted;
+        _levelsSwitcher.LevelStart -= OnLevelStart;
     }
 
     private void OnApplicationQuit()
@@ -50,6 +68,4 @@ public class GameInitializer : MonoBehaviour
         SaveData data = new SaveData(_levelsSwitcher.CurrentLevel, _playerProvider.Player.Wallet.AmountMoney);
         _saveSystem.Save(data);
     }
-
-
 }

@@ -12,6 +12,8 @@ public class LevelsSwitcher : MonoBehaviour, ILevelsInformant
     public int CurrentLevel => _currentLevel;
 
     public event UnityAction LevelChanges;
+    public event UnityAction LevelRestarted;
+    public event UnityAction LevelStart;
 
     private void OnDestroy()
     {
@@ -29,12 +31,13 @@ public class LevelsSwitcher : MonoBehaviour, ILevelsInformant
 
     private void StartLevel(int level)
     {
-        LevelChanges?.Invoke();
+        LevelStart?.Invoke();
         SceneManager.LoadScene(levelSceneName + level);
     }
 
     private void StartNextLevel()
     {
+        LevelChanges?.Invoke();
         _currentLevel++;
         if (_currentLevel >= SceneManager.sceneCountInBuildSettings - 1)
         {
@@ -45,6 +48,7 @@ public class LevelsSwitcher : MonoBehaviour, ILevelsInformant
 
     private void RestartLevel()
     {
+        LevelRestarted?.Invoke();
         StartLevel(_currentLevel);
     }
 }
