@@ -14,7 +14,7 @@ public class GameLoading : MonoBehaviour
         _saveSystem = new BinarySaveSystem();
         SaveData saveData = _saveSystem.Load();
         string level = levelSceneName + saveData.Level;
-        //TinySauce.OnGameStarted(level);
+        TinySauce.OnGameStarted(level);
         StartCoroutine(LoadAsync(level));
     }
 
