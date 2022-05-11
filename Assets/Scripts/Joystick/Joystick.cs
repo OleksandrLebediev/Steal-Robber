@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler, IFirstTapHandler
 {
     public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
     public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
-    public Vector3 MovementInput { get { return new Vector3(Horizontal, 0, Vertical); } }        
+    public Vector3 MovementInput { get { return new Vector3(Horizontal, 0, Vertical); } }
+    
+    public event UnityAction FirstTap;
+    private bool _isFirstTap;
     
     public float HandleRange
     {
@@ -60,6 +64,11 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
+        if (_isFirstTap == false)
+        {
+            FirstTap?.Invoke();
+            _isFirstTap = true;
+        }
         OnDrag(eventData);
     }
 
@@ -146,6 +155,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         }
         return Vector2.zero;
     }
+
 }
 
 public enum AxisOptions { Both, Horizontal, Vertical }

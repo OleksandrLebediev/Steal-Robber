@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: 8811169044043968758
     second: FacesOfEnemies0_0
+  - first:
+      213: 973725159434112062
+    second: FacesOfEnemies0_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -27,7 +30,6 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -127,6 +129,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: FacesOfEnemies0_1
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 353
+        width: 141
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3c4eec9fdd538d00800000000000000
+      internalID: 973725159434112062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -137,8 +160,6 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      FacesOfEnemies0_0: 8811169044043968758
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

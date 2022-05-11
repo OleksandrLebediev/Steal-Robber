@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour, IUIAnswer
         _uIInputData = uIInputData;
 
         _transitionScreen.Show();
-        _mainMenu.Initializer(playerWallet);
+        _mainMenu.Initializer(playerWallet, uIInputData);
         _winScreen.Initialize();
         _loseScreen.Initialize();
 

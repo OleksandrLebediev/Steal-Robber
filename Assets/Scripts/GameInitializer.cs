@@ -23,13 +23,14 @@ public class GameInitializer : MonoBehaviour
         if (_hostageProvider != null)
             _hostageProvider.Initialize();
 
-        UIInputData uIInputData = new UIInputData(_levelsSwitcher, _playerProvider.Player.Wallet);
-        _uIManager.Initialize(_requestsHandler, _playerProvider.Player,
-            uIInputData, _playerProvider.Player.Wallet);
-
         _saveSystem = new BinarySaveSystem();
         SaveData data = _saveSystem.Load();
         _levelsSwitcher.Initialize(_uIManager, data.Level);
+        
+        UIInputData uIInputData = new UIInputData(_levelsSwitcher, _playerProvider.Player.Wallet, _joystick);
+        _uIManager.Initialize(_requestsHandler, _playerProvider.Player,
+            uIInputData, _playerProvider.Player.Wallet);
+
         _playerProvider.Player.Wallet.Initialize(data.Money);
 
         _levelsSwitcher.LevelChanges += OnLevelChanges;

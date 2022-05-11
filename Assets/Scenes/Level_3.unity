@@ -2484,10 +2484,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4119416875894310067, guid: a1df84304df9d7b45a88365654a923b4, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6014260008451789240, guid: a1df84304df9d7b45a88365654a923b4, type: 3}
       propertyPath: m_Name
       value: Control Screen

@@ -1118,7 +1118,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1912940246902282041, guid: 3c6c3da522d5e684ebdd54d7bdd48ecc, type: 3}
       propertyPath: _capacity
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9123563944966598146, guid: 3c6c3da522d5e684ebdd54d7bdd48ecc, type: 3}
       propertyPath: m_Name
@@ -4280,6 +4280,18 @@ PrefabInstance:
       propertyPath: _request._numberOfTargets
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8605495066831118562, guid: 855a6b89e4638d44191ed1055cf26459, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605495066831118562, guid: 855a6b89e4638d44191ed1055cf26459, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8605495066831118562, guid: 855a6b89e4638d44191ed1055cf26459, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 855a6b89e4638d44191ed1055cf26459, type: 3}
 --- !u!114 &1702299517 stripped
@@ -6756,10 +6768,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 580782806, guid: 3766c2496537db94c910252058c831a4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5055353076459426302, guid: 3766c2496537db94c910252058c831a4, type: 3}
       propertyPath: _playerWallet
       value: 

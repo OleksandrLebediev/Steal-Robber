@@ -51,7 +51,7 @@ MonoBehaviour:
     _numberOfTargets: 5
     _reward: 10
     _objectForCollectType: 2
-    _spriteOfTarget: {fileID: 9119848287009991591, guid: 7fb28c514616ec44abd251504a8a8a7c, type: 3}
+    _spriteOfTarget: {fileID: 973725159434112062, guid: f525f662ab4c25342ad36f563c0dfc15, type: 3}
   _requestDisplay: {fileID: 2922330688594294726}
   _receiver: {fileID: 6224468780522065275}
 --- !u!82 &2922330689717490711
@@ -230,10 +230,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2922330689717490729}
     m_Modifications:
-    - target: {fileID: 1851810400447380198, guid: 39fdd6610efa0c5449b8a30ca2c7f379, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 3d26c97afa8da64498183f21dd0f62a1, type: 2}
     - target: {fileID: 1851810400456886606, guid: 39fdd6610efa0c5449b8a30ca2c7f379, type: 3}
       propertyPath: m_Name
       value: Medic

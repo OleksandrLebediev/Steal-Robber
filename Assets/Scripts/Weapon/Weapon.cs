@@ -19,7 +19,7 @@ public class Weapon : MonoBehaviour
 
     public void Fire(ITarget target)
     {
-        Instantiate(_muzzlePrefab, _muzzlePosition.transform.position,  Quaternion.Euler(0,-90, 0), transform);
+        Instantiate(_muzzlePrefab, _muzzlePosition.transform.position, Quaternion.Euler(0,-90, 0), transform);
         _source.PlayShootAudio(_gunShotClip, Random.Range(_audioPitch.x, _audioPitch.y));
         target.TakeDamage(_damage);
     }
