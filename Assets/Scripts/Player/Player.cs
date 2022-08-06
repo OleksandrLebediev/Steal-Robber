@@ -47,7 +47,9 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
         _display.Initialize(Bag.Capacity);
         _animatorOverrider.Initialize(_animator, Bag);
         _currentHealth = _health;
-        Subscribe();
+
+        Bag.Changed += OnBagChanged;
+        Bag.Full += OnBagFull;
     }
     
     private void Update()
@@ -57,7 +59,8 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
 
     private void OnDestroy()
     {
-        Unsubscribe();
+        Bag.Changed -= OnBagChanged;
+        Bag.Full -= OnBagFull;
     }
 
     public void TakeDamage(int damage)
@@ -83,8 +86,8 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
     
     private void OnBagChanged(int amount)
     {
-        _display.UpdateBag(amount);
-        _display.ShowBagCapacity();
+        //_display.UpdateBag(amount);
+        //_display.ShowBagCapacity();
     }
     
     private void OnBagFull()
@@ -94,13 +97,7 @@ public class Player : MonoBehaviour, ITarget, ISender, IPlayerEvents
     
     private void Subscribe()
     {
-        Bag.Changed += OnBagChanged;
-        Bag.Full += OnBagFull;
+
     }
 
-    private void Unsubscribe()
-    {
-        Bag.Changed -= OnBagChanged;
-        Bag.Full -= OnBagFull;
-    }
 }

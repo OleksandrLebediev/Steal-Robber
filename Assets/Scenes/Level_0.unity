@@ -364,14 +364,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1600121949}
     m_Modifications:
-    - target: {fileID: 1912940246902282041, guid: 3c6c3da522d5e684ebdd54d7bdd48ecc, type: 3}
-      propertyPath: _capacity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2551999245707956044, guid: 3c6c3da522d5e684ebdd54d7bdd48ecc, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9123563944966598146, guid: 3c6c3da522d5e684ebdd54d7bdd48ecc, type: 3}
       propertyPath: m_Name
       value: Player
