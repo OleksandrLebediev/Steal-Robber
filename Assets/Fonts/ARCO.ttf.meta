@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e146c1a55729e1747a74e5f6f6d5276d
+guid: a9cdd2ba013ba4b4c99be1d0493e8e02
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Bumpo
+  - ARCO Typography
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

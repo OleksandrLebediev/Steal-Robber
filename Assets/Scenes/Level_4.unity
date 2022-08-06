@@ -535,6 +535,10 @@ PrefabInstance:
       propertyPath: _capacity
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5543935018969335505, guid: 3c6c3da522d5e684ebdd54d7bdd48ecc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9123563944966598146, guid: 3c6c3da522d5e684ebdd54d7bdd48ecc, type: 3}
       propertyPath: m_Name
       value: Player
@@ -581,6 +585,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9123563944966632034, guid: 3c6c3da522d5e684ebdd54d7bdd48ecc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123563945389214301, guid: 3c6c3da522d5e684ebdd54d7bdd48ecc, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1129,7 +1137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8bec58b6ab54034c8a3bdc4cb971b62, type: 3}
+  m_Script: {fileID: 11500000, guid: dcafd80c0e526ed4aab10fb2e54f20e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &835320446 stripped

@@ -762,7 +762,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8bec58b6ab54034c8a3bdc4cb971b62, type: 3}
+  m_Script: {fileID: 11500000, guid: dcafd80c0e526ed4aab10fb2e54f20e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &835320446 stripped
@@ -3237,38 +3237,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 8811169044043968758, guid: f525f662ab4c25342ad36f563c0dfc15, type: 3}
-    - target: {fileID: 8611177361293473044, guid: 28e0d2756812d3b43bca8c2c65e2a23d, type: 3}
-      propertyPath: m_text
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8611177361293473044, guid: 28e0d2756812d3b43bca8c2c65e2a23d, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 43552defb5da5fd4dafb49f03af638a3, type: 2}
-    - target: {fileID: 8611177361293473044, guid: 28e0d2756812d3b43bca8c2c65e2a23d, type: 3}
-      propertyPath: m_fontStyle
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8611177361293473044, guid: 28e0d2756812d3b43bca8c2c65e2a23d, type: 3}
-      propertyPath: m_fontColor.b
-      value: 0.028301895
-      objectReference: {fileID: 0}
-    - target: {fileID: 8611177361293473044, guid: 28e0d2756812d3b43bca8c2c65e2a23d, type: 3}
-      propertyPath: m_fontColor.g
-      value: 0.028301895
-      objectReference: {fileID: 0}
-    - target: {fileID: 8611177361293473044, guid: 28e0d2756812d3b43bca8c2c65e2a23d, type: 3}
-      propertyPath: m_fontColor.r
-      value: 0.028301895
-      objectReference: {fileID: 0}
-    - target: {fileID: 8611177361293473044, guid: 28e0d2756812d3b43bca8c2c65e2a23d, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -2892783480186824814, guid: 43552defb5da5fd4dafb49f03af638a3, type: 2}
-    - target: {fileID: 8611177361293473044, guid: 28e0d2756812d3b43bca8c2c65e2a23d, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4278650631
-      objectReference: {fileID: 0}
     - target: {fileID: 8611177361372647929, guid: 28e0d2756812d3b43bca8c2c65e2a23d, type: 3}
       propertyPath: m_Enabled
       value: 1

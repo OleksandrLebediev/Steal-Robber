@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8bec58b6ab54034c8a3bdc4cb971b62, type: 3}
+  m_Script: {fileID: 11500000, guid: dcafd80c0e526ed4aab10fb2e54f20e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &835320446 stripped
@@ -4820,6 +4820,10 @@ PrefabInstance:
     - target: {fileID: 7424138792682087493, guid: 63ad2b2e0a03bc944a00237d7fec7b46, type: 3}
       propertyPath: m_Name
       value: Lose Screen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7424138792682087493, guid: 63ad2b2e0a03bc944a00237d7fec7b46, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63ad2b2e0a03bc944a00237d7fec7b46, type: 3}
